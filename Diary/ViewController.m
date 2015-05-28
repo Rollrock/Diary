@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "ShowViewController.h"
+#import "ShowView.h"
 
 @interface ViewController ()
 
@@ -17,7 +19,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100,100)];
+    btn.backgroundColor = [UIColor grayColor];
+    
+    [btn addTarget:self action:@selector(btn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+    
+    
+    
 }
+
+-(void)btn
+{
+    ShowView * view = [[ShowView alloc]initWithFrame:CGRectMake(0, 0, 320, 300)];
+    
+    [self.view addSubview:view];
+    
+    
+   }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>658290CD-FE27-4F91-8E46-04727A7D3489</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Diary</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BBDB851F351AEC65E9E012F3C5BB911943B7CDDA</key>
+		<string>https://github.com/Rollrock/Diary.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Diary.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BBDB851F351AEC65E9E012F3C5BB911943B7CDDA</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Rollrock/Diary.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BBDB851F351AEC65E9E012F3C5BB911943B7CDDA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BBDB851F351AEC65E9E012F3C5BB911943B7CDDA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Diary</string>
+		</dict>
+	</array>
+</dict>
+</plist>
