@@ -8,6 +8,18 @@
 
 #import "ShowView.h"
 
+
+@interface ShowView()
+{
+    BOOL tapCount;
+    NSTimer * tapTimer;
+    
+    UIView * buttomView;
+}
+
+@end
+
+
 @implementation ShowView
 
 
@@ -102,8 +114,7 @@
     {
         NSLog(@"s:%@",s);
     }
-    
-    
+
     
     return arr;
 }
@@ -111,7 +122,6 @@
 
 -(void)drawViews
 {
-    
     NSArray * array = [NSArray arrayWithObjects:@"轻轻的我走了",@"正如我轻轻的来；",@"我轻轻的招手，",@"作别西天的云彩。",@" ",@"那河畔的金柳，",@"是夕阳中的新娘；",@"波光里的艳影，",@"在我的心头荡漾。",@"软泥上的青荇，",@"油油的在水底招摇；",@"在康河的柔波里，",@"我甘心做一条水草。",@"那树荫下的一潭，",@"不是清泉，是天上虹；",@"揉碎在浮藻间，",@"沉淀着彩虹似的梦。",@"寻梦？撑一支长篙，",@"向青草更青处漫溯；",@"满载一船星辉，",@"在星辉斑斓里放歌。",@"但我不能放歌，",@"悄悄是别离的笙箫；",@"夏虫也为我沉默，",@"沉默是今晚的康桥！",nil];
     
     NSMutableArray * mArr= [NSMutableArray new];
@@ -172,18 +182,48 @@
     });
 }
 
+-(void)causeTap
+{
+    tapCount = 0;
+    
+    NSLog(@"causeTap");
+    
+    
+    [self layoutButtomView];
+}
+
+
 -(void)tapEvent
 {
-    CATransition * animation = [CATransition animation];
-    animation.delegate = self;
-    animation.duration = 2;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.type = @"rippleEffect";
-    animation.subtype = kCATransitionFromLeft;
-    [self.superview.layer addAnimation:animation forKey:@"animation"];
+    if( tapCount == 0 )
+    {
+        tapCount = 1;
+    }
+    else if (tapCount == 1 )
+    {
+        tapCount = 2;
+    }
+    else
+    {
+        tapCount = 0;
+    }
     
+    if( tapCount == 2 )
+    {
+        CATransition * animation = [CATransition animation];
+        animation.delegate = self;
+        animation.duration = 2;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        animation.type = @"rippleEffect";
+        animation.subtype = kCATransitionFromLeft;
+        [self.superview.layer addAnimation:animation forKey:@"animation"];
+        
+        
+        [self removeFromSuperview];
+    }
     
-    [self removeFromSuperview];
+    tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(causeTap) userInfo:nil repeats:NO];
+   
 }
 
 
@@ -214,6 +254,41 @@
 }
 
 
+-(void)layoutButtomView
+{
+    if( !buttomView )
+    {
+        buttomView = [[UIView alloc]initWithFrame:CGRectMake(0, 300, 320, 30)];
+        buttomView.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:buttomView];
+        
+        buttomView.hidden = YES;
+    }
+    
+    
+    if( buttomView.hidden )
+    {
+        [UIView animateWithDuration:1.0 animations:^(void){
+            buttomView.hidden = NO;
+            buttomView.alpha = 1;
+            
+        }completion:^(BOOL f){
+            
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:1.0 animations:^(void){
+            
+            buttomView.alpha = 0;
+            
+        }completion:^(BOOL f){
+            buttomView.hidden = YES;
+        }];
+    }
+    
+}
+
 -(id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -222,6 +297,8 @@
         self.backgroundColor = [UIColor whiteColor];
         
         [self initView];
+        
+        [self layoutButtomView];
     }
     
     return self;

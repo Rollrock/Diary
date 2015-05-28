@@ -35,10 +35,20 @@
 {
     ShowView * view = [[ShowView alloc]initWithFrame:CGRectMake(0, 0, 320, 300)];
     
+    
+    CATransition * animation = [CATransition animation];
+    animation.delegate = self;
+    animation.duration = 2;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.type = @"rippleEffect";
+    animation.subtype = kCATransitionFromLeft;
+    [self.view.layer addAnimation:animation forKey:@"animation"];
+
+    
     [self.view addSubview:view];
     
     
-   }
+}
 
 
 - (void)didReceiveMemoryWarning {
