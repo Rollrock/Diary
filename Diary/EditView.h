@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol EditViewDelegate <NSObject>
+
+-(void)editDone:(NSArray*)array;
+
+@end
+
+
 @interface EditView : UIView
-@property(copy) NSArray * dataArray;
 
 -(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array;
+
+
+@property(assign) id<EditViewDelegate> editDelegate;
 
 @end

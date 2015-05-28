@@ -14,14 +14,14 @@
 #define BTN_DIS  40
 
 
-@interface ShowView()
+@interface ShowView()<EditViewDelegate>
 {
     BOOL tapCount;
     NSTimer * tapTimer;
     
     UIView * buttomView;
     
-    NSMutableArray * array;
+    NSMutableArray * dataArray;
 }
 
 @end
@@ -126,11 +126,10 @@
 
 -(void)drawViews
 {
-    array = [NSMutableArray arrayWithObjects:@"轻轻的我走了",@"正如我轻轻的来；",@"我轻轻的招手，",@"作别西天的云彩。",@" ",@"那河畔的金柳，",@"是夕阳中的新娘；",@"波光里的艳影，",@"在我的心头荡漾。",@"软泥上的青荇，",@"油油的在水底招摇；",@"在康河的柔波里，",@"我甘心做一条水草。",@"那树荫下的一潭，",@"不是清泉，是天上虹；",@"揉碎在浮藻间，",@"沉淀着彩虹似的梦。",@"寻梦？撑一支长篙，",@"向青草更青处漫溯；",@"满载一船星辉，",@"在星辉斑斓里放歌。",@"但我不能放歌，",@"悄悄是别离的笙箫；",@"夏虫也为我沉默，",@"沉默是今晚的康桥！",nil];
     
     NSMutableArray * mArr= [NSMutableArray new];
     
-    for( NSString * str in array )
+    for( NSString * str in dataArray )
     {
         NSArray * tArr = [self fliterString:str];
         
@@ -306,7 +305,6 @@
             buttomView.hidden = YES;
         }];
     }
-    
 }
 
 
@@ -318,8 +316,8 @@
     
     if( tag == 0 )
     {
-        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:array];
-        
+        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:dataArray];
+        view.editDelegate = self;
         
         CATransition * animation = [CATransition animation];
         animation.delegate = self;
@@ -328,8 +326,7 @@
         animation.type = @"rippleEffect";
         animation.subtype = kCATransitionFromLeft;
         [self.layer addAnimation:animation forKey:@"animation"];
-        
-        //view.dataArray = array;
+ 
         [self addSubview:view];
         
     }
@@ -343,16 +340,47 @@
     }
 }
 
+
+-(void)editDone:(NSArray*)array
+{
+    NSLog(@"editDone");
+    
+    if( !array )
+    {
+        return;
+    }
+    
+    //
+    for( UIView * view in [self subviews] )
+    {
+        [view removeFromSuperview];
+    }
+    
+    //
+    [dataArray removeAllObjects];
+    dataArray = [array mutableCopy];
+    
+    //
+    [self initView];
+    [self layoutButtomView];
+    
+}
+
 -(id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if( self )
     {
+        
+        {
+            dataArray = [NSMutableArray arrayWithObjects:@"轻轻的我走了",@"正如我轻轻的来；",@"我轻轻的招手，",@"作别西天的云彩。",@" ",@"那河畔的金柳，",@"是夕阳中的新娘；",@"波光里的艳影，",@"在我的心头荡漾。",@"软泥上的青荇，",@"油油的在水底招摇；",@"在康河的柔波里，",@"我甘心做一条水草。",@"那树荫下的一潭，",@"不是清泉，是天上虹；",@"揉碎在浮藻间，",@"沉淀着彩虹似的梦。",@"寻梦？撑一支长篙，",@"向青草更青处漫溯；",@"满载一船星辉，",@"在星辉斑斓里放歌。",@"但我不能放歌，",@"悄悄是别离的笙箫；",@"夏虫也为我沉默，",@"沉默是今晚的康桥！",nil];
+
+        }
 
         self.backgroundColor = [UIColor whiteColor];
         self.userInteractionEnabled = YES;
-        [self initView];
         
+        [self initView];
         [self layoutButtomView];
         
      }
