@@ -22,6 +22,8 @@
     UIView * buttomView;
     
     NSMutableArray * dataArray;
+    
+    UIScrollView * scrView;
 }
 
 @end
@@ -38,9 +40,47 @@
 
 #define LAB_WIDTH (FONT_SIZE+2)
 #define LAB_HEIGHT  SCROLL_HEIGHT
-#define LAB_HEIGHT_MIN (LAB_HEIGHT-LAB_WIDTH)
+#define LAB_HEIGHT_MIN (LAB_HEIGHT-LAB_WIDTH*2)
 
 
+
+
+
+
+-(UIImage*)getImageFromView:(UIView*)view
+{
+    /*
+    UIGraphicsBeginImageContext(view.bounds.size);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return viewImage;
+     */
+    return nil;
+}
+
+//https://www.baidu.com/s?wd=ios%20uiscrollview%20UIGraphicsBeginImageContext&rsv_spt=1&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&oq=NSString&inputT=4913&rsv_pq=dd3d73ae00029864&rsv_t=6104pkO%2FTsniVbmzW%2BzXRceaoqNn1mIoymKQpOSN6hMQQgdE9NljVaEFSQNfu44dfnuB&rsv_sug3=72&rsv_sug1=27&bs=ios%20uiscrollview%20%E7%94%9F%E6%88%90%20%E5%9B%BE%E7%89%87
+
+-(void)saveImageToAlbum:(UIImage*)img
+{
+    
+    /*
+    UIImageView * imgView = [[UIImageView alloc]initWithImage:img];
+    
+    UIGraphicsBeginImageContext(imgView.bounds.size);
+    [imgView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *temp = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(temp, nil, nil, nil);
+     */
+    
+    UIGraphicsBeginImageContext(scrView.contentSize);
+    [scrView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(image,self, nil, nil);
+}
 
 -(UIFont*)getFont
 {
@@ -137,9 +177,9 @@
     }
     //
     
-    UIScrollView * scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, SCROLL_Y_POS, SCREEN_WIDTH , SCROLL_HEIGHT)];
+    scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, SCROLL_Y_POS, SCREEN_WIDTH , SCROLL_HEIGHT)];
     scrView.showsHorizontalScrollIndicator = NO;
-    //scrView.backgroundColor = [UIColor blueColor];
+    scrView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:scrView];
     [self addTapEvent:scrView];
     
@@ -193,7 +233,7 @@
     NSLog(@"causeTap");
     
     
-    [self layoutButtomView];
+    [self animationButtomView];
 }
 
 
@@ -232,11 +272,11 @@
 
 
 
--(void)addTapEvent:(UIScrollView*)scrView
+-(void)addTapEvent:(UIScrollView*)scView
 {
     UITapGestureRecognizer * g = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapEvent)];
     
-    [scrView addGestureRecognizer:g];
+    [scView addGestureRecognizer:g];
 }
 
 
@@ -259,32 +299,8 @@
 
 
 
-
--(void)layoutButtomView
+-(void)animationButtomView
 {
-    if( !buttomView )
-    {
-        buttomView = [[UIView alloc]initWithFrame:CGRectMake(0,SCROLL_Y_POS + SCROLL_HEIGHT, 320, 50)];
-        buttomView.backgroundColor = [UIColor lightGrayColor];
-        buttomView.userInteractionEnabled = YES;
-        buttomView.hidden = YES;
-        [self addSubview:buttomView];
-        
-        
-        //
-        CGFloat xPos = self.frame.size.width/2 - (BTN_DIS + BTN_WIDHT*1.5);
-        for( int i = 0; i < 3; ++ i )
-        {
-            UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(xPos + i * (BTN_WIDHT+BTN_DIS), 1, BTN_WIDHT, BTN_WIDHT)];
-            btn.backgroundColor = [UIColor orangeColor];
-            btn.tag = i;
-            [buttomView addSubview:btn];
-            
-            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        }
-    }
-    
-    
     if( buttomView.hidden )
     {
         [UIView animateWithDuration:1.0 animations:^(void){
@@ -305,6 +321,33 @@
             buttomView.hidden = YES;
         }];
     }
+
+}
+
+-(void)layoutButtomView
+{
+        buttomView = [[UIView alloc]initWithFrame:CGRectMake(0,SCROLL_Y_POS + SCROLL_HEIGHT, 320, 50)];
+        buttomView.backgroundColor = [UIColor lightGrayColor];
+        buttomView.userInteractionEnabled = YES;
+        buttomView.hidden = YES;
+        [self addSubview:buttomView];
+        
+        
+        //
+        CGFloat xPos = self.frame.size.width/2 - (BTN_DIS + BTN_WIDHT*1.5);
+        for( int i = 0; i < 3; ++ i )
+        {
+            UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(xPos + i * (BTN_WIDHT+BTN_DIS), 1, BTN_WIDHT, BTN_WIDHT)];
+            btn.backgroundColor = [UIColor orangeColor];
+            btn.tag = i;
+            [buttomView addSubview:btn];
+            
+            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
+   
+    
+    //
+    [self animationButtomView];
 }
 
 
@@ -332,6 +375,9 @@
     }
     else if( tag == 1 )
     {
+       // [self saveImageToAlbum:[self getImageFromView:scrView]];
+        
+        [self saveImageToAlbum:nil];
         
     }
     else if( tag == 2 )

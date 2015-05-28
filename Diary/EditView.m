@@ -60,17 +60,17 @@
 
 -(void)layoutDoneBtn
 {
-    doneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0-DONE_BTN_WIDTH, 0-DONE_BTN_WIDTH, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
+    doneBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH-10, SCREEN_HEIGHT-DONE_BTN_WIDTH-10, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
     doneBtn.backgroundColor = [UIColor grayColor];
-    doneBtn.alpha = 0;
+    //doneBtn.alpha = 0;
     [doneBtn addTarget:self action:@selector(doneClicked) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:doneBtn];
     
     //
     
-    cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0-DONE_BTN_WIDTH, 0-DONE_BTN_WIDTH, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
+    cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH*2-20, SCREEN_HEIGHT-DONE_BTN_WIDTH-10, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
     cancelBtn.backgroundColor = [UIColor grayColor];
-    cancelBtn.alpha = 0;
+    //cancelBtn.alpha = 0;
     [cancelBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:cancelBtn];
 
@@ -144,11 +144,11 @@
     
     textView.frame = textViewFrame;
     //
-    doneBtn.frame = CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH-10, textView.frame.origin.y + textView.frame.size.height - DONE_BTN_WIDTH , DONE_BTN_WIDTH, DONE_BTN_WIDTH);
+    doneBtn.frame = CGRectMake(doneBtn.frame.origin.x, textView.frame.origin.y + textView.frame.size.height - DONE_BTN_WIDTH , DONE_BTN_WIDTH, DONE_BTN_WIDTH);
     doneBtn.alpha = 1;
     
     //
-    cancelBtn.frame = CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH*2-20, textView.frame.origin.y + textView.frame.size.height - DONE_BTN_WIDTH , DONE_BTN_WIDTH, DONE_BTN_WIDTH);
+    cancelBtn.frame = CGRectMake(cancelBtn.frame.origin.x, textView.frame.origin.y + textView.frame.size.height - DONE_BTN_WIDTH , DONE_BTN_WIDTH, DONE_BTN_WIDTH);
     cancelBtn.alpha = 1;
     //
 }
