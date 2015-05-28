@@ -7,6 +7,11 @@
 //
 
 #import "ShowView.h"
+#import "EditView.h"
+#import "Header.h"
+
+#define BTN_WIDHT 30
+#define BTN_DIS  40
 
 
 @interface ShowView()
@@ -15,6 +20,8 @@
     NSTimer * tapTimer;
     
     UIView * buttomView;
+    
+    NSMutableArray * array;
 }
 
 @end
@@ -23,13 +30,10 @@
 @implementation ShowView
 
 
-#define FONT_SIZE  17.0f
-#define FONT_NAME   @""
 
+#define SCROLL_Y_POS  50
+#define SCROLL_HEIGHT (SCREEN_HEIGHT - SCROLL_Y_POS*2)
 
-#define SCREEN_WIDTH ([[UIScreen mainScreen ]bounds].size.width)
-#define SCREEN_HEIGHT ([[UIScreen mainScreen ]bounds].size.height)
-#define SCROLL_HEIGHT (SCREEN_HEIGHT - 50)
 
 
 #define LAB_WIDTH (FONT_SIZE+2)
@@ -122,7 +126,7 @@
 
 -(void)drawViews
 {
-    NSArray * array = [NSArray arrayWithObjects:@"轻轻的我走了",@"正如我轻轻的来；",@"我轻轻的招手，",@"作别西天的云彩。",@" ",@"那河畔的金柳，",@"是夕阳中的新娘；",@"波光里的艳影，",@"在我的心头荡漾。",@"软泥上的青荇，",@"油油的在水底招摇；",@"在康河的柔波里，",@"我甘心做一条水草。",@"那树荫下的一潭，",@"不是清泉，是天上虹；",@"揉碎在浮藻间，",@"沉淀着彩虹似的梦。",@"寻梦？撑一支长篙，",@"向青草更青处漫溯；",@"满载一船星辉，",@"在星辉斑斓里放歌。",@"但我不能放歌，",@"悄悄是别离的笙箫；",@"夏虫也为我沉默，",@"沉默是今晚的康桥！",nil];
+    array = [NSMutableArray arrayWithObjects:@"轻轻的我走了",@"正如我轻轻的来；",@"我轻轻的招手，",@"作别西天的云彩。",@" ",@"那河畔的金柳，",@"是夕阳中的新娘；",@"波光里的艳影，",@"在我的心头荡漾。",@"软泥上的青荇，",@"油油的在水底招摇；",@"在康河的柔波里，",@"我甘心做一条水草。",@"那树荫下的一潭，",@"不是清泉，是天上虹；",@"揉碎在浮藻间，",@"沉淀着彩虹似的梦。",@"寻梦？撑一支长篙，",@"向青草更青处漫溯；",@"满载一船星辉，",@"在星辉斑斓里放歌。",@"但我不能放歌，",@"悄悄是别离的笙箫；",@"夏虫也为我沉默，",@"沉默是今晚的康桥！",nil];
     
     NSMutableArray * mArr= [NSMutableArray new];
     
@@ -134,8 +138,9 @@
     }
     //
     
-    UIScrollView * scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH , SCROLL_HEIGHT)];
+    UIScrollView * scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, SCROLL_Y_POS, SCREEN_WIDTH , SCROLL_HEIGHT)];
     scrView.showsHorizontalScrollIndicator = NO;
+    //scrView.backgroundColor = [UIColor blueColor];
     [self addSubview:scrView];
     [self addTapEvent:scrView];
     
@@ -254,15 +259,30 @@
 }
 
 
+
+
 -(void)layoutButtomView
 {
     if( !buttomView )
     {
-        buttomView = [[UIView alloc]initWithFrame:CGRectMake(0, 300, 320, 30)];
+        buttomView = [[UIView alloc]initWithFrame:CGRectMake(0,SCROLL_Y_POS + SCROLL_HEIGHT, 320, 50)];
         buttomView.backgroundColor = [UIColor lightGrayColor];
+        buttomView.userInteractionEnabled = YES;
+        buttomView.hidden = YES;
         [self addSubview:buttomView];
         
-        buttomView.hidden = YES;
+        
+        //
+        CGFloat xPos = self.frame.size.width/2 - (BTN_DIS + BTN_WIDHT*1.5);
+        for( int i = 0; i < 3; ++ i )
+        {
+            UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(xPos + i * (BTN_WIDHT+BTN_DIS), 1, BTN_WIDHT, BTN_WIDHT)];
+            btn.backgroundColor = [UIColor orangeColor];
+            btn.tag = i;
+            [buttomView addSubview:btn];
+            
+            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
     
     
@@ -289,21 +309,56 @@
     
 }
 
+
+-(void)btnClicked:(UIButton*)btn
+{
+    int tag = btn.tag;
+    
+    NSLog(@"btnClicked:%d",tag);
+    
+    if( tag == 0 )
+    {
+        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:array];
+        
+        
+        CATransition * animation = [CATransition animation];
+        animation.delegate = self;
+        animation.duration = 2;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        animation.type = @"rippleEffect";
+        animation.subtype = kCATransitionFromLeft;
+        [self.layer addAnimation:animation forKey:@"animation"];
+        
+        //view.dataArray = array;
+        [self addSubview:view];
+        
+    }
+    else if( tag == 1 )
+    {
+        
+    }
+    else if( tag == 2 )
+    {
+        
+    }
+}
+
 -(id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if( self )
     {
+
         self.backgroundColor = [UIColor whiteColor];
-        
+        self.userInteractionEnabled = YES;
         [self initView];
         
         [self layoutButtomView];
-    }
+        
+     }
     
     return self;
 }
-
 
 
 /*

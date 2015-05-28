@@ -33,7 +33,7 @@
 
 -(void)btn
 {
-    ShowView * view = [[ShowView alloc]initWithFrame:CGRectMake(0, 0, 320, 300)];
+    ShowView * view = [[ShowView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
     
     
     CATransition * animation = [CATransition animation];

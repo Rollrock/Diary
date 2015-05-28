@@ -16,6 +16,7 @@
 		48238BA41B1711BB0029C7DB /* DiaryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238BA31B1711BB0029C7DB /* DiaryTests.m */; };
 		48238BB21B1724DB0029C7DB /* ShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238BB11B1724DB0029C7DB /* ShowViewController.m */; };
 		48238BB51B1725560029C7DB /* ShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238BB41B1725560029C7DB /* ShowView.m */; };
+		48238BB81B173FEA0029C7DB /* EditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238BB71B173FEA0029C7DB /* EditView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,9 @@
 		48238BB11B1724DB0029C7DB /* ShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowViewController.m; sourceTree = "<group>"; };
 		48238BB31B1725560029C7DB /* ShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowView.h; sourceTree = "<group>"; };
 		48238BB41B1725560029C7DB /* ShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowView.m; sourceTree = "<group>"; };
+		48238BB61B173FEA0029C7DB /* EditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditView.h; sourceTree = "<group>"; };
+		48238BB71B173FEA0029C7DB /* EditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditView.m; sourceTree = "<group>"; };
+		48238BB91B17473B0029C7DB /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,9 @@
 				48238BB11B1724DB0029C7DB /* ShowViewController.m */,
 				48238BB31B1725560029C7DB /* ShowView.h */,
 				48238BB41B1725560029C7DB /* ShowView.m */,
+				48238BB61B173FEA0029C7DB /* EditView.h */,
+				48238BB71B173FEA0029C7DB /* EditView.m */,
+				48238BB91B17473B0029C7DB /* Header.h */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -233,6 +240,7 @@
 				48238B8D1B1711BB0029C7DB /* AppDelegate.m in Sources */,
 				48238B8A1B1711BB0029C7DB /* main.m in Sources */,
 				48238BB51B1725560029C7DB /* ShowView.m in Sources */,
+				48238BB81B173FEA0029C7DB /* EditView.m in Sources */,
 				48238BB21B1724DB0029C7DB /* ShowViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
