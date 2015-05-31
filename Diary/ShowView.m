@@ -9,6 +9,7 @@
 #import "ShowView.h"
 #import "EditView.h"
 #import "Header.h"
+#import "MyFMDB.h"
 
 #define BTN_WIDHT 30
 #define BTN_DIS  40
@@ -42,23 +43,6 @@
 #define LAB_HEIGHT  SCROLL_HEIGHT
 #define LAB_HEIGHT_MIN (LAB_HEIGHT-LAB_WIDTH*2)
 
-
-
-
-
-
--(UIImage*)getImageFromView:(UIView*)view
-{
-    /*
-    UIGraphicsBeginImageContext(view.bounds.size);
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return viewImage;
-     */
-    return nil;
-}
 
 -(void)saveImageToAlbum:(UIImage*)img
 {
@@ -386,15 +370,18 @@
     }
     else if( tag == 1 )
     {
-       // [self saveImageToAlbum:[self getImageFromView:scrView]];
-        
         [self saveImageToAlbum:nil];
-        
     }
     else if( tag == 2 )
     {
         
     }
+}
+
+
+-(void)deleteArticle
+{
+    
 }
 
 
@@ -423,20 +410,35 @@
     
 }
 
--(id)initWithFrame:(CGRect)frame
+
+-(void)getArticleBody:(int)aId
+{
+   ArticleInfo * info = [[MyFMDB shareDB] queryDiaryWithId:aId];
+    
+    
+    dataArray = [ NSMutableArray arrayWithArray:[info.body componentsSeparatedByString:@"\n"]];
+
+}
+
+-(id)initWithFrame:(CGRect)frame withId:(int)aId
 {
     self = [super initWithFrame:frame];
     if( self )
     {
-        
+        /*
         {
             dataArray = [NSMutableArray arrayWithObjects:@"轻轻的我走了",@"正如我轻轻的来；",@"我轻轻的招手，",@"作别西天的云彩。",@" ",@"那河畔的金柳，",@"是夕阳中的新娘；",@"波光里的艳影，",@"在我的心头荡漾。",@"软泥上的青荇，",@"油油的在水底招摇；",@"在康河的柔波里，",@"我甘心做一条水草。",@"那树荫下的一潭，",@"不是清泉，是天上虹；",@"揉碎在浮藻间，",@"沉淀着彩虹似的梦。",@"寻梦？撑一支长篙，",@"向青草更青处漫溯；",@"满载一船星辉，",@"在星辉斑斓里放歌。",@"但我不能放歌，",@"悄悄是别离的笙箫；",@"夏虫也为我沉默，",@"沉默是今晚的康桥！",nil];
 
         }
+         */
+        
+        [self getArticleBody:aId];
 
+        //
         self.backgroundColor = [UIColor whiteColor];
         self.userInteractionEnabled = YES;
         
+        //
         [self initView];
         [self layoutButtomView];
         

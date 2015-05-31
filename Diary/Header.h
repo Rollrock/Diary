@@ -18,9 +18,4 @@
 #define SCREEN_HEIGHT ([[UIScreen mainScreen ]bounds].size.height)
 
 
-
-
-#define DB_NAME  @"rock_db"
-#define TB_NAME  @"rock_tb"
-
 #endif

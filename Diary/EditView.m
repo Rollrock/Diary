@@ -8,6 +8,8 @@
 
 #import "EditView.h"
 #import "Header.h"
+#import "MyFMDB.h"
+#import "Structs.h"
 
 #define DONE_BTN_WIDTH  40.0f
 
@@ -16,6 +18,7 @@
     UITextView * textView;
     UIButton * doneBtn;
     UIButton * cancelBtn;
+    BOOL bAdd;
 }
 @end
 
@@ -43,7 +46,6 @@
 
 -(void)layoutTextView:(NSArray*)array
 {
-    
     NSMutableString * mutStr = [NSMutableString new];
     
     for( NSString * str in array )
@@ -85,10 +87,22 @@
 {
     NSLog(@"doneClicked");
     
+    [self storeArticle];
+    
     [self dismissView];
     
     [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(scheduleDelegate) userInfo:nil repeats:NO];
 }
+
+-(void)storeArticle
+{
+    ArticleInfo * info = [ArticleInfo new];
+    info.time = [self getCurrentDate];
+    info.body = textView.text;
+    
+    [[MyFMDB shareDB] addDiary:info];
+}
+
 
 -(void)scheduleDelegate
 {
@@ -160,6 +174,25 @@
 }
 
 
+-(NSString*)getCurrentDate
+{
+    NSDate *now = [NSDate date];
+    NSLog(@"now date is: %@", now);
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+    
+    int year = [dateComponent year];
+    int month = [dateComponent month];
+    int day = [dateComponent day];
+    //int hour = [dateComponent hour];
+    //int minute = [dateComponent minute];
+    //int second = [dateComponent second];
+    
+    return [NSString stringWithFormat:@"%d_%d_%d",year,month,day];
+}
+
 
 -(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array
 {
@@ -169,6 +202,11 @@
     {
         self.userInteractionEnabled = YES;
         self.backgroundColor = [UIColor whiteColor];
+        
+        if( ! array )
+        {
+            bAdd = YES;
+        }
         
         [self layoutTextView:array];
         

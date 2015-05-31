@@ -10,5 +10,6 @@
 
 @interface ShowView : UIView
 
+-(id)initWithFrame:(CGRect)frame withId:(int)aId;
 
 @end
