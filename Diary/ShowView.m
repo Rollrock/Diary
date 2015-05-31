@@ -60,26 +60,37 @@
     return nil;
 }
 
-//https://www.baidu.com/s?wd=ios%20uiscrollview%20UIGraphicsBeginImageContext&rsv_spt=1&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&oq=NSString&inputT=4913&rsv_pq=dd3d73ae00029864&rsv_t=6104pkO%2FTsniVbmzW%2BzXRceaoqNn1mIoymKQpOSN6hMQQgdE9NljVaEFSQNfu44dfnuB&rsv_sug3=72&rsv_sug1=27&bs=ios%20uiscrollview%20%E7%94%9F%E6%88%90%20%E5%9B%BE%E7%89%87
-
 -(void)saveImageToAlbum:(UIImage*)img
 {
+    UIImageWriteToSavedPhotosAlbum([self captureScrollView:scrView],self, nil, nil);
     
-    /*
-    UIImageView * imgView = [[UIImageView alloc]initWithImage:img];
-    
-    UIGraphicsBeginImageContext(imgView.bounds.size);
-    [imgView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *temp = UIGraphicsGetImageFromCurrentImageContext();
+    NSLog(@"保存成功");
+}
+
+
+- (UIImage *)captureScrollView:(UIScrollView *)scrollView
+{
+    UIImage* image = nil;
+    UIGraphicsBeginImageContext(scrollView.contentSize);
+    {
+        CGPoint savedContentOffset = scrollView.contentOffset;
+        CGRect savedFrame = scrollView.frame;
+        scrollView.contentOffset = CGPointZero;
+        scrollView.frame = CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height);
+        
+        [scrollView.layer renderInContext: UIGraphicsGetCurrentContext()];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        
+        scrollView.contentOffset = savedContentOffset;
+        scrollView.frame = savedFrame;
+    }
     UIGraphicsEndImageContext();
-    UIImageWriteToSavedPhotosAlbum(temp, nil, nil, nil);
-     */
     
-    UIGraphicsBeginImageContext(scrView.contentSize);
-    [scrView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image=UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    UIImageWriteToSavedPhotosAlbum(image,self, nil, nil);
+    if (image != nil)
+    {
+        return image;
+    }
+    return nil;
 }
 
 -(UIFont*)getFont
