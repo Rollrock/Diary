@@ -18,7 +18,7 @@
 
 @interface EditView : UIView
 
--(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array;
+-(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString*)strTitle;
 
 
 @property(assign) id<EditViewDelegate> editDelegate;

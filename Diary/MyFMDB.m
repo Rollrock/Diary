@@ -8,12 +8,11 @@
 
 #import "MyFMDB.h"
 
-#define DB_NAME  @"rockDB.sqlite"
+#define DB_NAME  @"/rockDB.sqlite"
 #define TB_NAME @"rockTB"
 
 
 static MyFMDB * myDB;
-
 
 @implementation MyFMDB
 
@@ -43,7 +42,7 @@ static MyFMDB * myDB;
     
     if( ![sDB tableExists:TB_NAME] )
     {
-        [sDB executeUpdate:@"create table rockTB(myId integer primary key autoincrement not null, time varchar(128) , body varchar(1024))"];
+        [sDB executeUpdate:@"create table rockTB(myId integer primary key autoincrement not null, title varchar(128),time varchar(128) , body varchar(1024))"];
     }
 }
 
@@ -54,7 +53,7 @@ static MyFMDB * myDB;
         return;
     }
     
-    [sDB executeUpdate:@"insert into rockTB(time,body) values(?,?)",info.time,info.body];
+    [sDB executeUpdate:@"insert into rockTB(title,time,body) values(?,?,?)",info.title,info.time,info.body];
 }
 
 -(NSArray*)queryDiary
@@ -74,6 +73,7 @@ static MyFMDB * myDB;
         
         info.time = [result stringForColumn:@"time"];
         info.body = [result stringForColumn:@"body"];
+        info.title = [result stringForColumn:@"title"];
         info.aId = [result intForColumn:@"myId"];
         
         [arr addObject:info];
@@ -89,7 +89,7 @@ static MyFMDB * myDB;
         return nil;
     }
     
-    NSString * sql = [NSString stringWithFormat:@"select time,body from rockTB where myId=%d",aId];
+    NSString * sql = [NSString stringWithFormat:@"select title,time,body from rockTB where myId=%d",aId];
     
     FMResultSet * result = [sDB executeQuery:sql];
     
@@ -99,7 +99,9 @@ static MyFMDB * myDB;
         
         info.time = [result stringForColumn:@"time"];
         info.body = [result stringForColumn:@"body"];
+        info.title = [result stringForColumn:@"title"];
         info.aId = aId;
+        
         return info;
     }
     

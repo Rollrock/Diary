@@ -13,6 +13,7 @@
 @interface ArticleInfo : NSObject
 
 @property(assign) int aId;
+@property(strong) NSString * title;
 @property(strong) NSString * time;
 @property(strong) NSString * body;
 

@@ -13,9 +13,13 @@
 
 #define DONE_BTN_WIDTH  40.0f
 
+#define TITLE_LAB_HEIGHT  40
+
 @interface EditView()
 {
+    UITextField * titleField;
     UITextView * textView;
+    
     UIButton * doneBtn;
     UIButton * cancelBtn;
     BOOL bAdd;
@@ -42,19 +46,30 @@
     return font;
 }
 
-
+-(void)layoutTitleLab:(NSString*)title
+{
+    titleField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, TITLE_LAB_HEIGHT)];
+    titleField.backgroundColor = [UIColor orangeColor];
+    titleField.text = title;
+    
+    [self addSubview:titleField];
+}
 
 -(void)layoutTextView:(NSArray*)array
 {
     NSMutableString * mutStr = [NSMutableString new];
     
-    for( NSString * str in array )
+    NSMutableArray * mutArray = [NSMutableArray arrayWithArray:array];
+    [mutArray removeObjectAtIndex:0];
+    [mutArray removeObjectAtIndex:0];
+    
+    for( NSString * str in mutArray )
     {
         [mutStr appendString:str];
         [mutStr appendString:@"\n"];
     }
     
-    textView = [[UITextView alloc]initWithFrame:self.frame];
+    textView = [[UITextView alloc]initWithFrame:CGRectMake(0, TITLE_LAB_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-TITLE_LAB_HEIGHT)];
     textView.text = mutStr;
     textView.font = [self getFont];
     [self addSubview:textView];
@@ -64,6 +79,7 @@
 {
     doneBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH-10, SCREEN_HEIGHT-DONE_BTN_WIDTH-10, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
     doneBtn.backgroundColor = [UIColor grayColor];
+    [doneBtn setTitle:@"OK" forState:UIControlStateNormal];
     //doneBtn.alpha = 0;
     [doneBtn addTarget:self action:@selector(doneClicked) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:doneBtn];
@@ -72,6 +88,7 @@
     
     cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH*2-20, SCREEN_HEIGHT-DONE_BTN_WIDTH-10, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
     cancelBtn.backgroundColor = [UIColor grayColor];
+    [cancelBtn setTitle:@"BACK" forState:UIControlStateNormal];
     //cancelBtn.alpha = 0;
     [cancelBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:cancelBtn];
@@ -97,6 +114,7 @@
 -(void)storeArticle
 {
     ArticleInfo * info = [ArticleInfo new];
+    info.title = titleField.text;
     info.time = [self getCurrentDate];
     info.body = textView.text;
     
@@ -168,12 +186,6 @@
 }
 
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    NSLog(@"touchesBegan");
-}
-
-
 -(NSString*)getCurrentDate
 {
     NSDate *now = [NSDate date];
@@ -186,15 +198,13 @@
     int year = [dateComponent year];
     int month = [dateComponent month];
     int day = [dateComponent day];
-    //int hour = [dateComponent hour];
-    //int minute = [dateComponent minute];
-    //int second = [dateComponent second];
+ 
     
     return [NSString stringWithFormat:@"%d_%d_%d",year,month,day];
 }
 
 
--(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array
+-(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString *)strTitle
 {
     self = [super initWithFrame:frame];
     
@@ -207,6 +217,8 @@
         {
             bAdd = YES;
         }
+        
+        [self layoutTitleLab:strTitle];
         
         [self layoutTextView:array];
         

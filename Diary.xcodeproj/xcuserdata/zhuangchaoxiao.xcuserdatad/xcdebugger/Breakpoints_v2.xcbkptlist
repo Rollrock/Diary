@@ -29,13 +29,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Diary/3rd/fmdb/FMResultSet.m"
-            timestampString = "454776478.428912"
+            filePath = "Diary/EditView.m"
+            timestampString = "454837244.127863"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
-            landmarkName = "-columnIndexForName:"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-storeArticle"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

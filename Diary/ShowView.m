@@ -17,6 +17,8 @@
 
 @interface ShowView()<EditViewDelegate>
 {
+    NSString * titleStr;
+    
     BOOL tapCount;
     NSTimer * tapTimer;
     
@@ -44,9 +46,22 @@
 #define LAB_HEIGHT_MIN (LAB_HEIGHT-LAB_WIDTH*2)
 
 
+-(UIImage*)addWaterMask:(UIImage*)destImg withAddImg:(UIImage*)addImg
+{
+    UIGraphicsBeginImageContext(destImg.size);
+    [destImg drawInRect:CGRectMake(0, 0, destImg.size.width, destImg.size.height)];
+    [addImg drawInRect:CGRectMake(0, destImg.size.height-addImg.size.height, addImg.size.width, addImg.size.height)];
+    UIImage * rImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return rImg;
+}
+
 -(void)saveImageToAlbum:(UIImage*)img
 {
-    UIImageWriteToSavedPhotosAlbum([self captureScrollView:scrView],self, nil, nil);
+    UIImage * destImg = [self addWaterMask:[self captureScrollView:scrView] withAddImg:[UIImage imageNamed:@"1"]];
+    
+    UIImageWriteToSavedPhotosAlbum(destImg,self, nil, nil);
     
     NSLog(@"保存成功");
 }
@@ -161,6 +176,8 @@
 
 -(void)drawViews
 {
+    
+    
     
     NSMutableArray * mArr= [NSMutableArray new];
     
@@ -354,7 +371,7 @@
     
     if( tag == 0 )
     {
-        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:dataArray];
+        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:dataArray withTitle:titleStr];
         view.editDelegate = self;
         
         CATransition * animation = [CATransition animation];
@@ -414,9 +431,14 @@
 -(void)getArticleBody:(int)aId
 {
    ArticleInfo * info = [[MyFMDB shareDB] queryDiaryWithId:aId];
+   titleStr = info.title;
+
+   
+   dataArray = [ NSMutableArray arrayWithArray:[info.body componentsSeparatedByString:@"\n"]];
     
-    
-    dataArray = [ NSMutableArray arrayWithArray:[info.body componentsSeparatedByString:@"\n"]];
+    //
+    [dataArray insertObject:titleStr atIndex:0];
+    [dataArray insertObject:@"" atIndex:0];
 
 }
 

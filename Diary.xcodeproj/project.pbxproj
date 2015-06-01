@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480575E11B1C2870001C40A5 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 480575E01B1C2870001C40A5 /* 1.png */; };
 		48238B8A1B1711BB0029C7DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238B891B1711BB0029C7DB /* main.m */; };
 		48238B8D1B1711BB0029C7DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238B8C1B1711BB0029C7DB /* AppDelegate.m */; };
 		48238B901B1711BB0029C7DB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238B8F1B1711BB0029C7DB /* ViewController.m */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		480575E01B1C2870001C40A5 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		48238B841B1711BB0029C7DB /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48238B881B1711BB0029C7DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48238B891B1711BB0029C7DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -95,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		480575DF1B1C2870001C40A5 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				480575E01B1C2870001C40A5 /* 1.png */,
+			);
+			path = image;
+			sourceTree = "<group>";
+		};
 		48238B7B1B1711BB0029C7DB = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +127,7 @@
 		48238B861B1711BB0029C7DB /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				480575DF1B1C2870001C40A5 /* image */,
 				48238B8B1B1711BB0029C7DB /* AppDelegate.h */,
 				48238B8C1B1711BB0029C7DB /* AppDelegate.m */,
 				48238B8E1B1711BB0029C7DB /* ViewController.h */,
@@ -141,11 +152,11 @@
 			children = (
 				483EFCEA1B1B111400553486 /* MyFMDB.h */,
 				483EFCEB1B1B111400553486 /* MyFMDB.m */,
+				483EFCED1B1B259300553486 /* Structs.h */,
+				483EFCEE1B1B259300553486 /* Structs.m */,
 				483EFCD61B1B0FF100553486 /* 3rd */,
 				48238B881B1711BB0029C7DB /* Info.plist */,
 				48238B891B1711BB0029C7DB /* main.m */,
-				483EFCED1B1B259300553486 /* Structs.h */,
-				483EFCEE1B1B259300553486 /* Structs.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -274,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48238B931B1711BB0029C7DB /* Main.storyboard in Resources */,
+				480575E11B1C2870001C40A5 /* 1.png in Resources */,
 				48238B981B1711BB0029C7DB /* LaunchScreen.xib in Resources */,
 				48238B951B1711BB0029C7DB /* Images.xcassets in Resources */,
 			);
