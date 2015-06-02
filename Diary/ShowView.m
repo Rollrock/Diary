@@ -17,6 +17,9 @@
 
 @interface ShowView()<EditViewDelegate>
 {
+    
+    int articleId;
+    
     NSString * titleStr;
     
     BOOL tapCount;
@@ -35,17 +38,17 @@
 @implementation ShowView
 
 
-
+#define BUTTOM_VIEW_HEIGHT  50
 #define SCROLL_Y_POS  50
-#define SCROLL_HEIGHT (SCREEN_HEIGHT - SCROLL_Y_POS*2)
+#define SCROLL_HEIGHT (SCREEN_HEIGHT - SCROLL_Y_POS*2-BUTTOM_VIEW_HEIGHT)
 
 
-
-#define LAB_WIDTH (FONT_SIZE+2)
+#define LAB_WIDTH ([ShareInfo getLabWidth])
 #define LAB_HEIGHT  SCROLL_HEIGHT
 #define LAB_HEIGHT_MIN (LAB_HEIGHT-LAB_WIDTH*2)
 
 
+//添加水印
 -(UIImage*)addWaterMask:(UIImage*)destImg withAddImg:(UIImage*)addImg
 {
     UIGraphicsBeginImageContext(destImg.size);
@@ -59,7 +62,7 @@
 
 -(void)saveImageToAlbum:(UIImage*)img
 {
-    UIImage * destImg = [self addWaterMask:[self captureScrollView:scrView] withAddImg:[UIImage imageNamed:@"1"]];
+    UIImage * destImg = [self addWaterMask:[self captureScrollView:scrView] withAddImg:[UIImage imageNamed:@"water"]];
     
     UIImageWriteToSavedPhotosAlbum(destImg,self, nil, nil);
     
@@ -70,7 +73,8 @@
 - (UIImage *)captureScrollView:(UIScrollView *)scrollView
 {
     UIImage* image = nil;
-    UIGraphicsBeginImageContext(scrollView.contentSize);
+    //UIGraphicsBeginImageContext(scrollView.contentSize);
+    UIGraphicsBeginImageContextWithOptions(scrollView.contentSize,NO,0);
     {
         CGPoint savedContentOffset = scrollView.contentOffset;
         CGRect savedFrame = scrollView.frame;
@@ -92,26 +96,10 @@
     return nil;
 }
 
--(UIFont*)getFont
-{
-    UIFont * font;
-    
-    if( [FONT_NAME isEqualToString:@""] )
-    {
-        font = [UIFont systemFontOfSize:FONT_SIZE];
-    }
-    else
-    {
-        font = [UIFont fontWithName:FONT_NAME size:FONT_SIZE];
-    }
-    
-    return font;
-}
-
 
 - (float) heightForString:(NSString *)value
 {
-    NSDictionary *attribute = @{NSFontAttributeName: [self getFont]};
+    NSDictionary *attribute = @{NSFontAttributeName: [ShareInfo getBodyFont]};
     
     CGSize size = [value boundingRectWithSize:CGSizeMake(LAB_WIDTH, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
     
@@ -176,9 +164,6 @@
 
 -(void)drawViews
 {
-    
-    
-    
     NSMutableArray * mArr= [NSMutableArray new];
     
     for( NSString * str in dataArray )
@@ -191,7 +176,7 @@
     
     scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, SCROLL_Y_POS, SCREEN_WIDTH , SCROLL_HEIGHT)];
     scrView.showsHorizontalScrollIndicator = NO;
-    scrView.backgroundColor = [UIColor lightGrayColor];
+    //scrView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:scrView];
     [self addTapEvent:scrView];
     
@@ -203,12 +188,13 @@
                 
                 UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake([mArr count] * (LAB_WIDTH*1.5) -i*(LAB_WIDTH*1.5), 0, LAB_WIDTH, LAB_HEIGHT)];
                 lab.text = [mArr objectAtIndex:i];
-                lab.font = [self getFont];
+                
+                lab.font = ( i == 0 ? [ShareInfo getTitleFont]:[ShareInfo getBodyFont]);
                 
                 lab.alpha = 0.0;
                 
                 lab.numberOfLines = 0;
-                lab.lineBreakMode = NSLineBreakByCharWrapping;
+                lab.lineBreakMode = NSLineBreakByWordWrapping;
                 
                 CGFloat height = [self heightForString:lab.text]+LAB_WIDTH;
                 lab.frame = CGRectMake(lab.frame.origin.x, lab.frame.origin.y, lab.frame.size.width, height);
@@ -258,14 +244,7 @@
     else if (tapCount == 1 )
     {
         tapCount = 2;
-    }
-    else
-    {
-        tapCount = 0;
-    }
-    
-    if( tapCount == 2 )
-    {
+        
         CATransition * animation = [CATransition animation];
         animation.delegate = self;
         animation.duration = 2;
@@ -277,11 +256,21 @@
         
         [self removeFromSuperview];
     }
+    else
+    {
+        tapCount = 0;
+    }
     
     tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(causeTap) userInfo:nil repeats:NO];
    
 }
 
+-(void)dismissView
+{
+    tapCount = 1;
+    
+    [self tapEvent];
+}
 
 
 -(void)addTapEvent:(UIScrollView*)scView
@@ -306,7 +295,6 @@
                          
                          
                      }];
-
 }
 
 
@@ -338,8 +326,8 @@
 
 -(void)layoutButtomView
 {
-        buttomView = [[UIView alloc]initWithFrame:CGRectMake(0,SCROLL_Y_POS + SCROLL_HEIGHT, 320, 50)];
-        buttomView.backgroundColor = [UIColor lightGrayColor];
+        buttomView = [[UIView alloc]initWithFrame:CGRectMake(0,SCROLL_Y_POS*2 + SCROLL_HEIGHT, SCREEN_WIDTH, BUTTOM_VIEW_HEIGHT)];
+        buttomView.backgroundColor = [UIColor brownColor];
         buttomView.userInteractionEnabled = YES;
         buttomView.hidden = YES;
         [self addSubview:buttomView];
@@ -357,7 +345,6 @@
             [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
    
-    
     //
     [self animationButtomView];
 }
@@ -371,7 +358,7 @@
     
     if( tag == 0 )
     {
-        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:dataArray withTitle:titleStr];
+        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:dataArray withTitle:titleStr withId:articleId];
         view.editDelegate = self;
         
         CATransition * animation = [CATransition animation];
@@ -391,13 +378,18 @@
     }
     else if( tag == 2 )
     {
+        [self deleteArticle];
         
+        [self dismissView];
     }
 }
 
 
 -(void)deleteArticle
 {
+    [[MyFMDB shareDB] deleteDiaryWithId:articleId];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:RELOAD_ARTICLE_LIST_NOT object:nil];
     
 }
 
@@ -437,8 +429,9 @@
    dataArray = [ NSMutableArray arrayWithArray:[info.body componentsSeparatedByString:@"\n"]];
     
     //
+    [dataArray insertObject:@" " atIndex:0];
     [dataArray insertObject:titleStr atIndex:0];
-    [dataArray insertObject:@"" atIndex:0];
+    
 
 }
 
@@ -453,6 +446,8 @@
 
         }
          */
+        
+        articleId = aId;
         
         [self getArticleBody:aId];
 

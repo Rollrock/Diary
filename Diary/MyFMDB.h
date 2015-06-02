@@ -18,7 +18,10 @@
 +(MyFMDB*)shareDB;
 -(NSArray*)queryDiary;
 
+-(void)deleteDiaryWithId:(int)aId;
 -(ArticleInfo*)queryDiaryWithId:(int)aId;
 -(void)addDiary:(ArticleInfo*)info;
+-(void)updateDiary:(ArticleInfo*)info;
+-(int)queryDiaryWithTitle:(NSString*)title withBody:(NSString*)body;
 
 @end

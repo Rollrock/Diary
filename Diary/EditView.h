@@ -12,13 +12,13 @@
 @protocol EditViewDelegate <NSObject>
 
 -(void)editDone:(NSArray*)array;
-
+-(void)addDone:(int)myId;
 @end
 
 
 @interface EditView : UIView
 
--(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString*)strTitle;
+-(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString*)strTitle withId:(int)aId;
 
 
 @property(assign) id<EditViewDelegate> editDelegate;

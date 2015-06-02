@@ -9,13 +9,17 @@
 #ifndef Diary_Header_h
 #define Diary_Header_h
 
-
-#define FONT_SIZE  17.0f
-#define FONT_NAME   @""
+#import "ShareInfo.h"
 
 
 #define SCREEN_WIDTH ([[UIScreen mainScreen ]bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen ]bounds].size.height)
 
+
+//重新加载主界面的目录
+#define  RELOAD_ARTICLE_LIST_NOT  @"r_a_l_n"
+
+//添加新文章后返回主界面后显示添加的文章
+#define  SHOW_ARTICLE_NOT   @"s_a_n"
 
 #endif

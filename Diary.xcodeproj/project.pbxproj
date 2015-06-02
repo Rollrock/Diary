@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		480575E11B1C2870001C40A5 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 480575E01B1C2870001C40A5 /* 1.png */; };
+		480575E31B1C4784001C40A5 /* list_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 480575E21B1C4784001C40A5 /* list_bg.png */; };
+		480575E81B1C57ED001C40A5 /* fzlth.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 480575E51B1C57ED001C40A5 /* fzlth.TTF */; };
+		480575E91B1C57ED001C40A5 /* fzltxh.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 480575E61B1C57ED001C40A5 /* fzltxh.ttf */; };
+		480575EC1B1C6084001C40A5 /* 华文行楷.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 480575EB1B1C6084001C40A5 /* 华文行楷.ttf */; };
+		4808579C1B1D8B21000AD36A /* SettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4808579B1B1D8B21000AD36A /* SettingView.m */; };
+		480857A21B1D93C4000AD36A /* ShareInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 480857A11B1D93C4000AD36A /* ShareInfo.m */; };
+		480857A41B1DDFC3000AD36A /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = 480857A31B1DDFC3000AD36A /* water.png */; };
 		48238B8A1B1711BB0029C7DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238B891B1711BB0029C7DB /* main.m */; };
 		48238B8D1B1711BB0029C7DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238B8C1B1711BB0029C7DB /* AppDelegate.m */; };
 		48238B901B1711BB0029C7DB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48238B8F1B1711BB0029C7DB /* ViewController.m */; };
@@ -40,6 +47,15 @@
 
 /* Begin PBXFileReference section */
 		480575E01B1C2870001C40A5 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		480575E21B1C4784001C40A5 /* list_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list_bg.png; sourceTree = "<group>"; };
+		480575E51B1C57ED001C40A5 /* fzlth.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = fzlth.TTF; sourceTree = "<group>"; };
+		480575E61B1C57ED001C40A5 /* fzltxh.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fzltxh.ttf; sourceTree = "<group>"; };
+		480575EB1B1C6084001C40A5 /* 华文行楷.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "华文行楷.ttf"; sourceTree = "<group>"; };
+		4808579A1B1D8B21000AD36A /* SettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingView.h; sourceTree = "<group>"; };
+		4808579B1B1D8B21000AD36A /* SettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingView.m; sourceTree = "<group>"; };
+		480857A01B1D93C4000AD36A /* ShareInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareInfo.h; sourceTree = "<group>"; };
+		480857A11B1D93C4000AD36A /* ShareInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareInfo.m; sourceTree = "<group>"; };
+		480857A31B1DDFC3000AD36A /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
 		48238B841B1711BB0029C7DB /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48238B881B1711BB0029C7DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48238B891B1711BB0029C7DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -100,9 +116,21 @@
 		480575DF1B1C2870001C40A5 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				480857A31B1DDFC3000AD36A /* water.png */,
+				480575E21B1C4784001C40A5 /* list_bg.png */,
 				480575E01B1C2870001C40A5 /* 1.png */,
 			);
 			path = image;
+			sourceTree = "<group>";
+		};
+		480575E41B1C57ED001C40A5 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				480575EB1B1C6084001C40A5 /* 华文行楷.ttf */,
+				480575E51B1C57ED001C40A5 /* fzlth.TTF */,
+				480575E61B1C57ED001C40A5 /* fzltxh.ttf */,
+			);
+			path = font;
 			sourceTree = "<group>";
 		};
 		48238B7B1B1711BB0029C7DB = {
@@ -143,6 +171,14 @@
 				48238BB61B173FEA0029C7DB /* EditView.h */,
 				48238BB71B173FEA0029C7DB /* EditView.m */,
 				48238BB91B17473B0029C7DB /* Header.h */,
+				4808579A1B1D8B21000AD36A /* SettingView.h */,
+				4808579B1B1D8B21000AD36A /* SettingView.m */,
+				483EFCEA1B1B111400553486 /* MyFMDB.h */,
+				483EFCEB1B1B111400553486 /* MyFMDB.m */,
+				480857A01B1D93C4000AD36A /* ShareInfo.h */,
+				480857A11B1D93C4000AD36A /* ShareInfo.m */,
+				483EFCED1B1B259300553486 /* Structs.h */,
+				483EFCEE1B1B259300553486 /* Structs.m */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -150,10 +186,6 @@
 		48238B871B1711BB0029C7DB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				483EFCEA1B1B111400553486 /* MyFMDB.h */,
-				483EFCEB1B1B111400553486 /* MyFMDB.m */,
-				483EFCED1B1B259300553486 /* Structs.h */,
-				483EFCEE1B1B259300553486 /* Structs.m */,
 				483EFCD61B1B0FF100553486 /* 3rd */,
 				48238B881B1711BB0029C7DB /* Info.plist */,
 				48238B891B1711BB0029C7DB /* main.m */,
@@ -181,6 +213,7 @@
 		483EFCD61B1B0FF100553486 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				480575E41B1C57ED001C40A5 /* font */,
 				483EFCD71B1B0FF100553486 /* fmdb */,
 			);
 			path = 3rd;
@@ -286,8 +319,13 @@
 			files = (
 				48238B931B1711BB0029C7DB /* Main.storyboard in Resources */,
 				480575E11B1C2870001C40A5 /* 1.png in Resources */,
+				480857A41B1DDFC3000AD36A /* water.png in Resources */,
+				480575E31B1C4784001C40A5 /* list_bg.png in Resources */,
 				48238B981B1711BB0029C7DB /* LaunchScreen.xib in Resources */,
+				480575EC1B1C6084001C40A5 /* 华文行楷.ttf in Resources */,
 				48238B951B1711BB0029C7DB /* Images.xcassets in Resources */,
+				480575E81B1C57ED001C40A5 /* fzlth.TTF in Resources */,
+				480575E91B1C57ED001C40A5 /* fzltxh.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,8 +350,10 @@
 				483EFCE51B1B0FF100553486 /* FMDatabasePool.m in Sources */,
 				483EFCE61B1B0FF100553486 /* FMDatabaseQueue.m in Sources */,
 				483EFCEF1B1B259300553486 /* Structs.m in Sources */,
+				480857A21B1D93C4000AD36A /* ShareInfo.m in Sources */,
 				48238BB51B1725560029C7DB /* ShowView.m in Sources */,
 				48238BB81B173FEA0029C7DB /* EditView.m in Sources */,
+				4808579C1B1D8B21000AD36A /* SettingView.m in Sources */,
 				483EFCE71B1B0FF100553486 /* FMResultSet.m in Sources */,
 				48238BB21B1724DB0029C7DB /* ShowViewController.m in Sources */,
 				483EFCEC1B1B111400553486 /* MyFMDB.m in Sources */,

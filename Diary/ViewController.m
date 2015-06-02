@@ -12,11 +12,12 @@
 #import "MyFMDB.h"
 #import "EditView.h"
 #import "Header.h"
+#import "SettingView.h"
 
 
 #define SCROLL_HEIGHT  200
 
-#define LAB_WIDTH 15
+#define LAB_WIDTH ([ShareInfo getLabWidth])
 #define LAB_HEIGHT SCROLL_HEIGHT
 
 @interface ViewController ()<EditViewDelegate>
@@ -32,21 +33,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    /*
+    
     {
         UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 400, 50,50)];
         btn.backgroundColor = [UIColor grayColor];
-        [btn setTitle:@"显示" forState:UIControlStateNormal];
+        [btn setTitle:@"设置" forState:UIControlStateNormal];
         
-        [btn addTarget:self action:@selector(btn) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:btn];
+        [btn addTarget:self action:@selector(setting) forControlEvents:UIControlEventTouchUpInside];
+        //[self.view addSubview:btn];
     }
-     */
+    
     
     {
         UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(80, 400, 50,50)];
         btn.backgroundColor = [UIColor grayColor];
         [btn setTitle:@"添加" forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:20];
         
         [btn addTarget:self action:@selector(addArticle) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:btn];
@@ -54,16 +56,15 @@
     
     //
     [MyFMDB shareDB];
-    
+    //
+    [self addReloadListNot];
     //
     [self layoutArticleList];
 }
 
 -(void)layoutArticleList
 {
-    articleArray = [NSMutableArray new];
-    
-    articleArray = [[[MyFMDB shareDB] queryDiary] copy];
+    articleArray = [NSMutableArray arrayWithArray:[[MyFMDB shareDB] queryDiary]];
     
     //
     for( ArticleInfo * info in articleArray )
@@ -74,25 +75,11 @@
     [self drawViews:articleArray];
 }
 
--(UIFont*)getFont
-{
-    UIFont * font;
-    
-    if( [FONT_NAME isEqualToString:@""] )
-    {
-        font = [UIFont systemFontOfSize:FONT_SIZE];
-    }
-    else
-    {
-        font = [UIFont fontWithName:FONT_NAME size:FONT_SIZE];
-    }
-    
-    return font;
-}
+
 
 - (float) heightForString:(NSString *)value
 {
-    NSDictionary *attribute = @{NSFontAttributeName: [self getFont]};
+    NSDictionary *attribute = @{NSFontAttributeName: [ShareInfo getBodyFont]};
     
     CGSize size = [value boundingRectWithSize:CGSizeMake(LAB_WIDTH, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
     
@@ -117,12 +104,20 @@
 
 -(void)drawViews:(NSArray*)mArr
 {
-    scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0 , SCREEN_WIDTH-20 , SCROLL_HEIGHT)];
-    scrView.center = self.view.center;
-    scrView.showsHorizontalScrollIndicator = NO;
-    scrView.backgroundColor = [UIColor lightGrayColor];
-    [self.view addSubview:scrView];
+    if( !scrView )
+    {
+        UIImageView * bgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCROLL_HEIGHT+20)];
+        bgView.image = [UIImage imageNamed:@"list_bg"];
+        bgView.center = self.view.center;
+        [self.view addSubview:bgView];
+        
 
+        scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0 , SCREEN_WIDTH-40 , SCROLL_HEIGHT)];
+        scrView.center = self.view.center;
+        scrView.showsHorizontalScrollIndicator = NO;
+        scrView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:scrView];
+    }
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
         
@@ -132,7 +127,7 @@
                 
                 UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake([mArr count] * (LAB_WIDTH*1.5) -i*(LAB_WIDTH*1.5), 0, LAB_WIDTH, LAB_HEIGHT)];
                 lab.text = ((ArticleInfo*)[mArr objectAtIndex:i]).title;
-                lab.font = [self getFont];
+                lab.font = [ShareInfo getBodyFont];
                 lab.tag = ((ArticleInfo*)[mArr objectAtIndex:i]).aId;
                 
                 [self addTitleG:lab withTag:lab.tag];
@@ -140,7 +135,7 @@
                 lab.alpha = 0.0;
                 
                 lab.numberOfLines = 0;
-                lab.lineBreakMode = NSLineBreakByCharWrapping;
+                lab.lineBreakMode = NSLineBreakByWordWrapping;
                 
                 CGFloat height = [self heightForString:lab.text]+LAB_WIDTH;
                 lab.frame = CGRectMake(lab.frame.origin.x, lab.frame.origin.y, lab.frame.size.width, height);
@@ -172,7 +167,6 @@
 {
     ShowView * view = [[ShowView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) withId:aId];
     
-    
     CATransition * animation = [CATransition animation];
     animation.delegate = self;
     animation.duration = 2;
@@ -183,13 +177,12 @@
     
     
     [self.view addSubview:view];
-    
-
 }
+
 
 -(void)addArticle
 {
-    EditView * view = [[EditView alloc]initWithFrame:self.view.frame wihtArray:nil withTitle:nil];
+    EditView * view = [[EditView alloc]initWithFrame:self.view.frame wihtArray:nil withTitle:nil withId:0];
     view.editDelegate = self;
     
     CATransition * animation = [CATransition animation];
@@ -202,6 +195,49 @@
     
     [self.view addSubview:view];
 
+}
+
+-(void)setting
+{
+    SettingView * view = [[SettingView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+    
+    CATransition * animation = [CATransition animation];
+    animation.delegate = self;
+    animation.duration = 2;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.type = @"rippleEffect";
+    animation.subtype = kCATransitionFromLeft;
+    [self.view.layer addAnimation:animation forKey:@"animation"];
+    
+    
+    [self.view addSubview:view];
+}
+
+-(void)addDone:(int)myId
+{
+    [self showArticle:myId];
+}
+
+//重新加载list
+-(void)reloadList
+{
+    [articleArray removeAllObjects];
+    articleArray = nil;
+    
+    //
+    for( UIView * view in [scrView subviews] )
+    {
+        [view removeFromSuperview];
+    }
+    
+    //
+    [self layoutArticleList];
+
+}
+
+-(void)addReloadListNot
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadList) name:RELOAD_ARTICLE_LIST_NOT object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

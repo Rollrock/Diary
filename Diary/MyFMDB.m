@@ -42,8 +42,26 @@ static MyFMDB * myDB;
     
     if( ![sDB tableExists:TB_NAME] )
     {
-        [sDB executeUpdate:@"create table rockTB(myId integer primary key autoincrement not null, title varchar(128),time varchar(128) , body varchar(1024))"];
+       BOOL ret = [sDB executeUpdate:@"create table rockTB(myId integer primary key autoincrement not null, title varchar(128),time varchar(128) , body varchar(1024))"];
+        
+        NSLog(@"createTb:%d",ret);
     }
+}
+
+-(void)updateDiary:(ArticleInfo*)info
+{
+    if( ![sDB open])
+    {
+        return;
+    }
+    
+    NSString * str = [NSString stringWithFormat:@"update rockTB SET title = '%@' ,body = '%@' WHERE myId = %d",
+                      info.title, info.body, info.aId];
+    
+    BOOL ret = [sDB executeUpdate:str];
+    
+    NSLog(@"updateDiary:%d",ret);
+    
 }
 
 -(void)addDiary:(ArticleInfo*)info
@@ -108,6 +126,29 @@ static MyFMDB * myDB;
     return nil;
 }
 
+-(int)queryDiaryWithTitle:(NSString*)title withBody:(NSString*)body
+{
+    if( ![sDB open])
+    {
+        return -1;
+    }
+    
+    NSString * sql = [NSString stringWithFormat:@"select myId from rockTB where title='%@' and body='%@'", title,body];
+    FMResultSet * result = [sDB executeQuery:sql];
+    
+    while([result next])
+    {
+        int i = [result intForColumn:@"myId"];
+        return i;
+    }
+    
+    return -1;
+}
+
+-(void)deleteDiaryWithId:(int)aId
+{
+    [sDB executeUpdate:[NSString stringWithFormat:@"delete from rockTB where myId=%d",aId]];
+}
 
 
 +(MyFMDB*)shareDB

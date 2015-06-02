@@ -13,7 +13,8 @@
 
 #define DONE_BTN_WIDTH  40.0f
 
-#define TITLE_LAB_HEIGHT  40
+#define TITLE_LAB_HEIGHT  40.0f
+#define TITLE_LAB_Y_POS  20.0f
 
 @interface EditView()
 {
@@ -23,6 +24,8 @@
     UIButton * doneBtn;
     UIButton * cancelBtn;
     BOOL bAdd;
+    
+    int articleId;
 }
 @end
 
@@ -30,25 +33,9 @@
 @implementation EditView
 
 
--(UIFont*)getFont
-{
-    UIFont * font;
-    
-    if( [FONT_NAME isEqualToString:@""] )
-    {
-        font = [UIFont systemFontOfSize:FONT_SIZE];
-    }
-    else
-    {
-        font = [UIFont fontWithName:FONT_NAME size:FONT_SIZE];
-    }
-    
-    return font;
-}
-
 -(void)layoutTitleLab:(NSString*)title
 {
-    titleField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, TITLE_LAB_HEIGHT)];
+    titleField = [[UITextField alloc]initWithFrame:CGRectMake(0, TITLE_LAB_Y_POS, SCREEN_WIDTH, TITLE_LAB_HEIGHT)];
     titleField.backgroundColor = [UIColor orangeColor];
     titleField.text = title;
     
@@ -59,19 +46,25 @@
 {
     NSMutableString * mutStr = [NSMutableString new];
     
-    NSMutableArray * mutArray = [NSMutableArray arrayWithArray:array];
-    [mutArray removeObjectAtIndex:0];
-    [mutArray removeObjectAtIndex:0];
-    
-    for( NSString * str in mutArray )
+    if( array != nil )
     {
-        [mutStr appendString:str];
-        [mutStr appendString:@"\n"];
+        NSMutableArray * mutArray = [NSMutableArray arrayWithArray:array];
+        [mutArray removeObjectAtIndex:0];
+        [mutArray removeObjectAtIndex:0];
+        
+        for( NSString * str in mutArray )
+        {
+            [mutStr appendString:str];
+            [mutStr appendString:@"\n"];
+        }
     }
     
-    textView = [[UITextView alloc]initWithFrame:CGRectMake(0, TITLE_LAB_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-TITLE_LAB_HEIGHT)];
+    
+    textView = [[UITextView alloc]initWithFrame:CGRectMake(0, TITLE_LAB_HEIGHT+TITLE_LAB_Y_POS, SCREEN_WIDTH, SCREEN_HEIGHT-TITLE_LAB_HEIGHT)];
     textView.text = mutStr;
-    textView.font = [self getFont];
+    textView.backgroundColor = [UIColor lightGrayColor];
+    //textView.font = [ShareInfo getBodyFont];
+    textView.font = [UIFont systemFontOfSize:20];
     [self addSubview:textView];
 }
 
@@ -106,6 +99,8 @@
     
     [self storeArticle];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:RELOAD_ARTICLE_LIST_NOT object:nil];
+    
     [self dismissView];
     
     [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(scheduleDelegate) userInfo:nil repeats:NO];
@@ -117,8 +112,16 @@
     info.title = titleField.text;
     info.time = [self getCurrentDate];
     info.body = textView.text;
+    info.aId = articleId;
     
-    [[MyFMDB shareDB] addDiary:info];
+    if( bAdd )
+    {
+        [[MyFMDB shareDB] addDiary:info];
+    }
+    else
+    {
+        [[MyFMDB shareDB] updateDiary:info];
+    }
 }
 
 
@@ -128,9 +131,19 @@
     {
         NSString * str = textView.text;
         
-        NSArray * arr = [str componentsSeparatedByString:@"\n"];
+        NSMutableArray * dataArray = [NSMutableArray arrayWithArray:[str componentsSeparatedByString:@"\n"]];
         
-        [_editDelegate editDone:arr];
+        [dataArray insertObject:@" " atIndex:0];
+        [dataArray insertObject:titleField.text atIndex:0];
+        
+        
+        [_editDelegate editDone:dataArray];
+    }
+    else if( [_editDelegate respondsToSelector:@selector(addDone:)] )
+    {
+        int myId = [[MyFMDB shareDB] queryDiaryWithTitle:titleField.text withBody:textView.text];
+        
+        [_editDelegate addDone:myId];
     }
 }
 
@@ -204,7 +217,7 @@
 }
 
 
--(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString *)strTitle
+-(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString *)strTitle withId:(int)aId
 {
     self = [super initWithFrame:frame];
     
@@ -218,6 +231,8 @@
             bAdd = YES;
         }
         
+        articleId = aId;
+        
         [self layoutTitleLab:strTitle];
         
         [self layoutTextView:array];
@@ -229,9 +244,6 @@
     
     return self;
 }
-
-
-
 
 
 /*
