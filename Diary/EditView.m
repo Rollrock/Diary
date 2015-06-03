@@ -26,7 +26,10 @@
     BOOL bAdd;
     
     int articleId;
-    NSString * time;
+    NSString * timeStr;
+    NSString * titleStr;
+    
+    NSMutableArray * dataArray;
 }
 @end
 
@@ -38,6 +41,7 @@
 {
     titleField = [[UITextField alloc]initWithFrame:CGRectMake(0, TITLE_LAB_Y_POS, SCREEN_WIDTH, TITLE_LAB_HEIGHT)];
     titleField.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1];
+    titleField.font = [UIFont systemFontOfSize:20];
     titleField.text = title;
     
     [self addSubview:titleField];
@@ -50,8 +54,6 @@
     if( array != nil )
     {
         NSMutableArray * mutArray = [NSMutableArray arrayWithArray:array];
-        [mutArray removeObjectAtIndex:0];
-        [mutArray removeObjectAtIndex:0];
         
         for( NSString * str in mutArray )
         {
@@ -65,7 +67,7 @@
     textView.text = mutStr;
     //textView.backgroundColor = [UIColor lightGrayColor];
     //textView.font = [ShareInfo getBodyFont];
-    textView.font = [UIFont systemFontOfSize:20];
+    textView.font = [UIFont systemFontOfSize:18];
     [self addSubview:textView];
 }
 
@@ -91,6 +93,15 @@
 
 -(void)cancelClick
 {
+    
+    if( [_editDelegate respondsToSelector:@selector(cancelEdit:)])
+    {
+        [dataArray insertObject:titleStr atIndex:0];
+        [dataArray addObject:timeStr];
+        
+        [_editDelegate cancelEdit:dataArray];
+    }
+    
     [self dismissView];
 }
 
@@ -132,17 +143,14 @@
     {
         NSString * str = textView.text;
         
-        NSMutableArray * dataArray = [NSMutableArray arrayWithArray:[str componentsSeparatedByString:@"\n"]];
+        NSMutableArray * _dataArray = [NSMutableArray arrayWithArray:[str componentsSeparatedByString:@"\n"]];
         
-        [dataArray insertObject:@" " atIndex:0];
-        [dataArray insertObject:titleField.text atIndex:0];
+        [_dataArray insertObject:titleField.text atIndex:0];
+        [_dataArray addObject:timeStr];
         
-        //[dataArray addObject:@" "];
-        //[dataArray addObject:[self getCurrentDate]];
-        
-        
-        [_editDelegate editDone:dataArray];
+        [_editDelegate editDone:_dataArray];
     }
+    
     else if( [_editDelegate respondsToSelector:@selector(addDone:)] )
     {
         int myId = [[MyFMDB shareDB] queryDiaryWithTitle:titleField.text withBody:textView.text];
@@ -225,7 +233,7 @@
     NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
     NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
     
-    int year = [dateComponent year];
+    //int year = [dateComponent year];
     int month = [dateComponent month];
     int day = [dateComponent day];
  
@@ -239,7 +247,7 @@
 }
 
 
--(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString *)strTitle withId:(int)aId
+-(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString *)strTitle withTime:(NSString*)time withId:(int)aId
 {
     self = [super initWithFrame:frame];
     
@@ -253,7 +261,11 @@
             bAdd = YES;
         }
         
+        dataArray = [NSMutableArray arrayWithArray:array];
+        
         articleId = aId;
+        timeStr = time;
+        titleStr = strTitle;
         
         [self layoutTitleLab:strTitle];
         

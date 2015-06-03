@@ -15,7 +15,7 @@
 #import "SettingView.h"
 
 
-#define SCROLL_HEIGHT  200
+#define SCROLL_HEIGHT  250
 
 #define LAB_WIDTH ([ShareInfo getLabWidth])
 #define LAB_HEIGHT SCROLL_HEIGHT
@@ -184,7 +184,7 @@
 
 -(void)addArticle
 {
-    EditView * view = [[EditView alloc]initWithFrame:self.view.frame wihtArray:nil withTitle:nil withId:0];
+    EditView * view = [[EditView alloc]initWithFrame:self.view.frame wihtArray:nil withTitle:nil withTime:nil withId:0];
     view.editDelegate = self;
     
     CATransition * animation = [CATransition animation];

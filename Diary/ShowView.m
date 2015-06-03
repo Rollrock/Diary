@@ -10,6 +10,8 @@
 #import "EditView.h"
 #import "Header.h"
 #import "MyFMDB.h"
+#import "SVProgressHUD.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #define BTN_WIDHT 30
 #define BTN_DIS  40
@@ -17,12 +19,14 @@
 
 @interface ShowView()<EditViewDelegate>
 {
+    BOOL stopGCD;
     
     int articleId;
     
     NSString * titleStr;
+    NSString * timeStr;
     
-    BOOL tapCount;
+    int tapCount;
     NSTimer * tapTimer;
     
     UIView * buttomView;
@@ -62,18 +66,31 @@
 
 -(void)saveImageToAlbum:(UIImage*)img
 {
+    
+    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+    if( author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied )
+    {
+        [SVProgressHUD showErrorWithStatus:@"您没有打开相册权限，请在设置里面打开相册权限"];
+        
+        return;
+    }
+    
+    [SVProgressHUD showWithStatus:@"保存中..."];
+    
     UIImage * destImg = [self addWaterMask:[self captureScrollView:scrView] withAddImg:[UIImage imageNamed:@"water"]];
     
     UIImageWriteToSavedPhotosAlbum(destImg,self, nil, nil);
     
     NSLog(@"保存成功");
+    
+    [SVProgressHUD showSuccessWithStatus:@"保存成功!"];
 }
 
 
 - (UIImage *)captureScrollView:(UIScrollView *)scrollView
 {
     UIImage* image = nil;
-    UIGraphicsBeginImageContextWithOptions(scrollView.contentSize,NO,0);
+    UIGraphicsBeginImageContextWithOptions(scrollView.contentSize,NO, [[UIScreen mainScreen] scale]);
     {
         CGPoint savedContentOffset = scrollView.contentOffset;
         CGRect savedFrame = scrollView.frame;
@@ -201,8 +218,19 @@
                 UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake([mArr count] * (LAB_WIDTH*1.5) -i*(LAB_WIDTH*1.5), 0, LAB_WIDTH, LAB_HEIGHT)];
                 lab.text = [mArr objectAtIndex:i];
                 
-                lab.font = ( i == 0 ? [ShareInfo getTitleFont]:[ShareInfo getBodyFont]);
-                lab.font = ( (i == [mArr count]-1 )? [ShareInfo getTimeFont]:[ShareInfo getBodyFont]);
+                if( 0 == i )
+                {
+                    lab.font = [ShareInfo getTitleFont];
+                }
+                else if( i == [mArr count] - 1 )
+                {
+                    lab.font = [ShareInfo getTimeFont];
+                }
+                else
+                {
+                    lab.font = [ShareInfo getBodyFont];
+                }
+               
                 
                 lab.alpha = 0.0;
                 //lab.backgroundColor = [UIColor grayColor];
@@ -225,13 +253,24 @@
                     
                     lab.alpha = 1.0;
                     
-                    /// scrView.contentOffset = CGPointMake(scrView.contentSize.width - scrView.frame.size.width/2 - i*LAB_WIDTH*1.5, scrView.contentOffset.y);
-                    
                 }];
             });
             
             
             sleep(1);
+            
+            if( stopGCD )
+            {
+                stopGCD = NO;
+                
+                break;
+            }
+            
+            
+            if( i == [mArr count] -1 )
+            {
+                stopGCD = YES;
+            }
         }
         
     });
@@ -383,7 +422,18 @@
     
     if( tag == 0 )
     {
-        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:dataArray withTitle:titleStr withId:articleId];
+        stopGCD = !stopGCD;
+        
+        //
+        timeStr = [dataArray lastObject];
+        
+        //去掉时间
+        [dataArray removeLastObject];
+        //去掉Title
+        [dataArray removeObjectAtIndex:0];
+        
+        //
+        EditView * view = [[EditView alloc]initWithFrame:self.frame wihtArray:dataArray withTitle:titleStr withTime:timeStr withId:articleId];
         view.editDelegate = self;
         
         CATransition * animation = [CATransition animation];
@@ -394,6 +444,8 @@
         animation.subtype = kCATransitionFromLeft;
         [self.layer addAnimation:animation forKey:@"animation"];
  
+        //stopGCD = NO;
+        
         [self addSubview:view];
         
     }
@@ -418,6 +470,11 @@
     
 }
 
+//////
+-(void)cancelEdit:(NSArray*)array
+{
+    [self editDone:array];
+}
 
 -(void)editDone:(NSArray*)array
 {
@@ -450,15 +507,12 @@
    ArticleInfo * info = [[MyFMDB shareDB] queryDiaryWithId:aId];
    titleStr = info.title;
 
-   
    dataArray = [ NSMutableArray arrayWithArray:[info.body componentsSeparatedByString:@"\n"]];
     
     //添加title
-    [dataArray insertObject:@" " atIndex:0];
     [dataArray insertObject:titleStr atIndex:0];
     
     //添加time
-    //[dataArray addObject:@"  "];
     [dataArray addObject:[NSString stringWithFormat:@"   %@",info.time]];
 
 }
@@ -466,15 +520,9 @@
 -(id)initWithFrame:(CGRect)frame withId:(int)aId
 {
     self = [super initWithFrame:frame];
+    
     if( self )
     {
-        /*
-        {
-            dataArray = [NSMutableArray arrayWithObjects:@"轻轻的我走了",@"正如我轻轻的来；",@"我轻轻的招手，",@"作别西天的云彩。",@" ",@"那河畔的金柳，",@"是夕阳中的新娘；",@"波光里的艳影，",@"在我的心头荡漾。",@"软泥上的青荇，",@"油油的在水底招摇；",@"在康河的柔波里，",@"我甘心做一条水草。",@"那树荫下的一潭，",@"不是清泉，是天上虹；",@"揉碎在浮藻间，",@"沉淀着彩虹似的梦。",@"寻梦？撑一支长篙，",@"向青草更青处漫溯；",@"满载一船星辉，",@"在星辉斑斓里放歌。",@"但我不能放歌，",@"悄悄是别离的笙箫；",@"夏虫也为我沉默，",@"沉默是今晚的康桥！",nil];
-
-        }
-         */
-        
         articleId = aId;
         
         [self getArticleBody:aId];

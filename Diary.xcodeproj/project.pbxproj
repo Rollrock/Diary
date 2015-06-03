@@ -33,6 +33,9 @@
 		483EFCE91B1B104500553486 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 483EFCE81B1B104500553486 /* libsqlite3.dylib */; };
 		483EFCEC1B1B111400553486 /* MyFMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 483EFCEB1B1B111400553486 /* MyFMDB.m */; };
 		483EFCEF1B1B259300553486 /* Structs.m in Sources */ = {isa = PBXBuildFile; fileRef = 483EFCEE1B1B259300553486 /* Structs.m */; };
+		48B975261B1F53490044BA72 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B975211B1F53490044BA72 /* SVIndefiniteAnimatedView.m */; };
+		48B975271B1F53490044BA72 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48B975231B1F53490044BA72 /* SVProgressHUD.bundle */; };
+		48B975281B1F53490044BA72 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B975251B1F53490044BA72 /* SVProgressHUD.m */; };
 		48FAEA951B1EA1D0006D8DE7 /* 1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FAEA8D1B1EA1D0006D8DE7 /* 1024.png */; };
 		48FAEA961B1EA1D0006D8DE7 /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FAEA8E1B1EA1D0006D8DE7 /* 120.png */; };
 		48FAEA971B1EA1D0006D8DE7 /* 180.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FAEA8F1B1EA1D0006D8DE7 /* 180.png */; };
@@ -106,6 +109,12 @@
 		483EFCEB1B1B111400553486 /* MyFMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFMDB.m; sourceTree = "<group>"; };
 		483EFCED1B1B259300553486 /* Structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Structs.h; sourceTree = "<group>"; };
 		483EFCEE1B1B259300553486 /* Structs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Structs.m; sourceTree = "<group>"; };
+		48B975201B1F53490044BA72 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		48B975211B1F53490044BA72 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		48B975221B1F53490044BA72 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		48B975231B1F53490044BA72 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		48B975241B1F53490044BA72 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		48B975251B1F53490044BA72 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		48FAEA8D1B1EA1D0006D8DE7 /* 1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1024.png; sourceTree = "<group>"; };
 		48FAEA8E1B1EA1D0006D8DE7 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
 		48FAEA8F1B1EA1D0006D8DE7 /* 180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 180.png; sourceTree = "<group>"; };
@@ -248,6 +257,7 @@
 		483EFCD61B1B0FF100553486 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				48B9751F1B1F53490044BA72 /* SVProgressHUD */,
 				480575E41B1C57ED001C40A5 /* font */,
 				483EFCD71B1B0FF100553486 /* fmdb */,
 			);
@@ -270,6 +280,19 @@
 				483EFCE21B1B0FF100553486 /* FMResultSet.m */,
 			);
 			path = fmdb;
+			sourceTree = "<group>";
+		};
+		48B9751F1B1F53490044BA72 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				48B975201B1F53490044BA72 /* SVIndefiniteAnimatedView.h */,
+				48B975211B1F53490044BA72 /* SVIndefiniteAnimatedView.m */,
+				48B975221B1F53490044BA72 /* SVProgressHUD-Prefix.pch */,
+				48B975231B1F53490044BA72 /* SVProgressHUD.bundle */,
+				48B975241B1F53490044BA72 /* SVProgressHUD.h */,
+				48B975251B1F53490044BA72 /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		48FAEA8C1B1EA1D0006D8DE7 /* icon */ = {
@@ -386,6 +409,7 @@
 				48FAEAA81B1EA9CB006D8DE7 /* ok.png in Resources */,
 				480575E81B1C57ED001C40A5 /* fzlth.TTF in Resources */,
 				48FAEA991B1EA1D0006D8DE7 /* 512.png in Resources */,
+				48B975271B1F53490044BA72 /* SVProgressHUD.bundle in Resources */,
 				48FAEAA71B1EA9CB006D8DE7 /* back.png in Resources */,
 				48FAEAA11B1EA39D006D8DE7 /* del.png in Resources */,
 				480575E91B1C57ED001C40A5 /* fzltxh.ttf in Resources */,
@@ -412,12 +436,14 @@
 				48238B8A1B1711BB0029C7DB /* main.m in Sources */,
 				483EFCE31B1B0FF100553486 /* FMDatabase.m in Sources */,
 				483EFCE51B1B0FF100553486 /* FMDatabasePool.m in Sources */,
+				48B975281B1F53490044BA72 /* SVProgressHUD.m in Sources */,
 				483EFCE61B1B0FF100553486 /* FMDatabaseQueue.m in Sources */,
 				483EFCEF1B1B259300553486 /* Structs.m in Sources */,
 				480857A21B1D93C4000AD36A /* ShareInfo.m in Sources */,
 				48238BB51B1725560029C7DB /* ShowView.m in Sources */,
 				48238BB81B173FEA0029C7DB /* EditView.m in Sources */,
 				4808579C1B1D8B21000AD36A /* SettingView.m in Sources */,
+				48B975261B1F53490044BA72 /* SVIndefiniteAnimatedView.m in Sources */,
 				483EFCE71B1B0FF100553486 /* FMResultSet.m in Sources */,
 				48238BB21B1724DB0029C7DB /* ShowViewController.m in Sources */,
 				483EFCEC1B1B111400553486 /* MyFMDB.m in Sources */,

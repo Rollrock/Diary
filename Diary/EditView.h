@@ -13,12 +13,13 @@
 
 -(void)editDone:(NSArray*)array;
 -(void)addDone:(int)myId;
+-(void)cancelEdit:(NSArray*)array;
 @end
 
 
 @interface EditView : UIView
 
--(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString*)strTitle withId:(int)aId;
+-(id)initWithFrame:(CGRect)frame wihtArray:(NSArray*)array withTitle:(NSString *)strTitle withTime:(NSString*)time withId:(int)aId;
 
 
 @property(assign) id<EditViewDelegate> editDelegate;
