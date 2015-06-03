@@ -11,9 +11,9 @@
 #import "MyFMDB.h"
 #import "Structs.h"
 
-#define DONE_BTN_WIDTH  40.0f
+#define DONE_BTN_WIDTH  30.0f
 
-#define TITLE_LAB_HEIGHT  40.0f
+#define TITLE_LAB_HEIGHT  30.0f
 #define TITLE_LAB_Y_POS  20.0f
 
 @interface EditView()
@@ -26,6 +26,7 @@
     BOOL bAdd;
     
     int articleId;
+    NSString * time;
 }
 @end
 
@@ -36,7 +37,7 @@
 -(void)layoutTitleLab:(NSString*)title
 {
     titleField = [[UITextField alloc]initWithFrame:CGRectMake(0, TITLE_LAB_Y_POS, SCREEN_WIDTH, TITLE_LAB_HEIGHT)];
-    titleField.backgroundColor = [UIColor orangeColor];
+    titleField.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1];
     titleField.text = title;
     
     [self addSubview:titleField];
@@ -62,7 +63,7 @@
     
     textView = [[UITextView alloc]initWithFrame:CGRectMake(0, TITLE_LAB_HEIGHT+TITLE_LAB_Y_POS, SCREEN_WIDTH, SCREEN_HEIGHT-TITLE_LAB_HEIGHT)];
     textView.text = mutStr;
-    textView.backgroundColor = [UIColor lightGrayColor];
+    //textView.backgroundColor = [UIColor lightGrayColor];
     //textView.font = [ShareInfo getBodyFont];
     textView.font = [UIFont systemFontOfSize:20];
     [self addSubview:textView];
@@ -71,19 +72,19 @@
 -(void)layoutDoneBtn
 {
     doneBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH-10, SCREEN_HEIGHT-DONE_BTN_WIDTH-10, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
-    doneBtn.backgroundColor = [UIColor grayColor];
-    [doneBtn setTitle:@"OK" forState:UIControlStateNormal];
-    //doneBtn.alpha = 0;
-    [doneBtn addTarget:self action:@selector(doneClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    [doneBtn setBackgroundImage:[UIImage imageNamed:@"ok"] forState:UIControlStateNormal];
+    
+    [doneBtn addTarget:self action:@selector(doneClicked) forControlEvents:UIControlEventTouchDown];
     [self addSubview:doneBtn];
     
     //
     
     cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - DONE_BTN_WIDTH*2-20, SCREEN_HEIGHT-DONE_BTN_WIDTH-10, DONE_BTN_WIDTH, DONE_BTN_WIDTH)];
-    cancelBtn.backgroundColor = [UIColor grayColor];
-    [cancelBtn setTitle:@"BACK" forState:UIControlStateNormal];
-    //cancelBtn.alpha = 0;
-    [cancelBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cancelBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+
+    [cancelBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchDown];
     [self addSubview:cancelBtn];
 
 }
@@ -135,6 +136,9 @@
         
         [dataArray insertObject:@" " atIndex:0];
         [dataArray insertObject:titleField.text atIndex:0];
+        
+        //[dataArray addObject:@" "];
+        //[dataArray addObject:[self getCurrentDate]];
         
         
         [_editDelegate editDone:dataArray];
@@ -198,6 +202,19 @@
     //
 }
 
+-(NSString*)getCharFromNum:(int)num
+{
+    NSArray * array = @[@"零",@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九"];
+    
+    if( num < 0 || num > 9 )
+    {
+        return @"";
+    }
+    
+    return [array objectAtIndex:num];
+}
+
+
 
 -(NSString*)getCurrentDate
 {
@@ -212,8 +229,13 @@
     int month = [dateComponent month];
     int day = [dateComponent day];
  
+    int mH = month/10;
+    int mL = month%10;
     
-    return [NSString stringWithFormat:@"%d_%d_%d",year,month,day];
+    int dH = day/10;
+    int dL = day%10;
+    
+    return [NSString stringWithFormat:@"%@%@月%@%@日",[self getCharFromNum:mH],[self getCharFromNum:mL],[self getCharFromNum:dH],[self getCharFromNum:dL]];
 }
 
 

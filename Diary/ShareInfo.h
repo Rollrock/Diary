@@ -14,5 +14,11 @@
 +(UIFont*)getBodyFont;
 +(UIFont*)getTitleFont;
 +(int)getLabWidth;
++(UIFont*)getTimeFont;
+
++(BOOL)getFirstUse;
++(void)setFirstUse;
+
++(void)addDemoDiary;
 
 @end

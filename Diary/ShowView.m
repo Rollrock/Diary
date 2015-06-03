@@ -73,7 +73,6 @@
 - (UIImage *)captureScrollView:(UIScrollView *)scrollView
 {
     UIImage* image = nil;
-    //UIGraphicsBeginImageContext(scrollView.contentSize);
     UIGraphicsBeginImageContextWithOptions(scrollView.contentSize,NO,0);
     {
         CGPoint savedContentOffset = scrollView.contentOffset;
@@ -101,9 +100,22 @@
 {
     NSDictionary *attribute = @{NSFontAttributeName: [ShareInfo getBodyFont]};
     
-    CGSize size = [value boundingRectWithSize:CGSizeMake(LAB_WIDTH, 0) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+    CGSize size = [value boundingRectWithSize:CGSizeMake(LAB_WIDTH, 0) options: NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
     
-    return size.height;
+    
+    int count = 0;
+    for (int i=0; i<value.length; i++)
+    {
+        NSRange range = NSMakeRange(i,1);
+        NSString *aStr = [value substringWithRange:range];
+        
+        if ([aStr isEqualToString:@" "])
+        {
+            count++;
+        }
+    }
+    
+    return size.height +  (count+1) * LAB_WIDTH;
 }
 
 
@@ -190,11 +202,12 @@
                 lab.text = [mArr objectAtIndex:i];
                 
                 lab.font = ( i == 0 ? [ShareInfo getTitleFont]:[ShareInfo getBodyFont]);
+                lab.font = ( (i == [mArr count]-1 )? [ShareInfo getTimeFont]:[ShareInfo getBodyFont]);
                 
                 lab.alpha = 0.0;
-                
+                //lab.backgroundColor = [UIColor grayColor];
                 lab.numberOfLines = 0;
-                lab.lineBreakMode = NSLineBreakByWordWrapping;
+                lab.lineBreakMode = NSLineBreakByCharWrapping;//NSLineBreakByWordWrapping;
                 
                 CGFloat height = [self heightForString:lab.text]+LAB_WIDTH;
                 lab.frame = CGRectMake(lab.frame.origin.x, lab.frame.origin.y, lab.frame.size.width, height);
@@ -327,7 +340,7 @@
 -(void)layoutButtomView
 {
         buttomView = [[UIView alloc]initWithFrame:CGRectMake(0,SCROLL_Y_POS*2 + SCROLL_HEIGHT, SCREEN_WIDTH, BUTTOM_VIEW_HEIGHT)];
-        buttomView.backgroundColor = [UIColor brownColor];
+        buttomView.backgroundColor = [UIColor whiteColor];
         buttomView.userInteractionEnabled = YES;
         buttomView.hidden = YES;
         [self addSubview:buttomView];
@@ -338,13 +351,25 @@
         for( int i = 0; i < 3; ++ i )
         {
             UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(xPos + i * (BTN_WIDHT+BTN_DIS), 1, BTN_WIDHT, BTN_WIDHT)];
-            btn.backgroundColor = [UIColor orangeColor];
+            //btn.backgroundColor = [UIColor orangeColor];
             btn.tag = i;
             [buttomView addSubview:btn];
             
-            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
+            
+            if( 0 == i )
+            {
+                [btn setBackgroundImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
+            }
+            else if( 1 == i )
+            {
+                [btn setBackgroundImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
+            }
+            else if (2 == i )
+            {
+                [btn setBackgroundImage:[UIImage imageNamed:@"del"] forState:UIControlStateNormal];
+            }
         }
-   
     //
     [self animationButtomView];
 }
@@ -428,10 +453,13 @@
    
    dataArray = [ NSMutableArray arrayWithArray:[info.body componentsSeparatedByString:@"\n"]];
     
-    //
+    //添加title
     [dataArray insertObject:@" " atIndex:0];
     [dataArray insertObject:titleStr atIndex:0];
     
+    //添加time
+    //[dataArray addObject:@"  "];
+    [dataArray addObject:[NSString stringWithFormat:@"   %@",info.time]];
 
 }
 

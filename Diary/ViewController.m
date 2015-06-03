@@ -45,17 +45,19 @@
     
     
     {
-        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(80, 400, 50,50)];
-        btn.backgroundColor = [UIColor grayColor];
+        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 35 -10, SCREEN_HEIGHT - 35 - 10, 30,30)];
         [btn setTitle:@"添加" forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+        
         btn.titleLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:20];
         
-        [btn addTarget:self action:@selector(addArticle) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(addArticle) forControlEvents:UIControlEventTouchDown];
         [self.view addSubview:btn];
     }
     
     //
     [MyFMDB shareDB];
+    [ShareInfo addDemoDiary];
     //
     [self addReloadListNot];
     //
@@ -109,7 +111,7 @@
         UIImageView * bgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCROLL_HEIGHT+20)];
         bgView.image = [UIImage imageNamed:@"list_bg"];
         bgView.center = self.view.center;
-        [self.view addSubview:bgView];
+        //[self.view addSubview:bgView];
         
 
         scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0 , SCREEN_WIDTH-40 , SCROLL_HEIGHT)];
