@@ -36,6 +36,10 @@
 		48B975261B1F53490044BA72 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B975211B1F53490044BA72 /* SVIndefiniteAnimatedView.m */; };
 		48B975271B1F53490044BA72 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48B975231B1F53490044BA72 /* SVProgressHUD.bundle */; };
 		48B975281B1F53490044BA72 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B975251B1F53490044BA72 /* SVProgressHUD.m */; };
+		48F76F941B1FEC63001D0C36 /* 4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F76F901B1FEC63001D0C36 /* 4@2x.png */; };
+		48F76F951B1FEC63001D0C36 /* 5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F76F911B1FEC63001D0C36 /* 5@2x.png */; };
+		48F76F961B1FEC63001D0C36 /* 6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F76F921B1FEC63001D0C36 /* 6@2x.png */; };
+		48F76F971B1FEC63001D0C36 /* 6p@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F76F931B1FEC63001D0C36 /* 6p@3x.png */; };
 		48FAEA951B1EA1D0006D8DE7 /* 1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FAEA8D1B1EA1D0006D8DE7 /* 1024.png */; };
 		48FAEA961B1EA1D0006D8DE7 /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FAEA8E1B1EA1D0006D8DE7 /* 120.png */; };
 		48FAEA971B1EA1D0006D8DE7 /* 180.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FAEA8F1B1EA1D0006D8DE7 /* 180.png */; };
@@ -115,6 +119,10 @@
 		48B975231B1F53490044BA72 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		48B975241B1F53490044BA72 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		48B975251B1F53490044BA72 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		48F76F901B1FEC63001D0C36 /* 4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4@2x.png"; sourceTree = "<group>"; };
+		48F76F911B1FEC63001D0C36 /* 5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5@2x.png"; sourceTree = "<group>"; };
+		48F76F921B1FEC63001D0C36 /* 6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6@2x.png"; sourceTree = "<group>"; };
+		48F76F931B1FEC63001D0C36 /* 6p@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6p@3x.png"; sourceTree = "<group>"; };
 		48FAEA8D1B1EA1D0006D8DE7 /* 1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1024.png; sourceTree = "<group>"; };
 		48FAEA8E1B1EA1D0006D8DE7 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
 		48FAEA8F1B1EA1D0006D8DE7 /* 180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 180.png; sourceTree = "<group>"; };
@@ -153,6 +161,7 @@
 		480575DF1B1C2870001C40A5 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				48F76F8F1B1FEC63001D0C36 /* launch */,
 				48FAEAA51B1EA9CB006D8DE7 /* back.png */,
 				48FAEAA61B1EA9CB006D8DE7 /* ok.png */,
 				48FAEAA31B1EA653006D8DE7 /* save.png */,
@@ -295,6 +304,17 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		48F76F8F1B1FEC63001D0C36 /* launch */ = {
+			isa = PBXGroup;
+			children = (
+				48F76F901B1FEC63001D0C36 /* 4@2x.png */,
+				48F76F911B1FEC63001D0C36 /* 5@2x.png */,
+				48F76F921B1FEC63001D0C36 /* 6@2x.png */,
+				48F76F931B1FEC63001D0C36 /* 6p@3x.png */,
+			);
+			path = launch;
+			sourceTree = "<group>";
+		};
 		48FAEA8C1B1EA1D0006D8DE7 /* icon */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +379,7 @@
 				TargetAttributes = {
 					48238B831B1711BB0029C7DB = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 398SEH57CU;
 					};
 					48238B9C1B1711BB0029C7DB = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -390,9 +411,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48F76F961B1FEC63001D0C36 /* 6@2x.png in Resources */,
 				48238B931B1711BB0029C7DB /* Main.storyboard in Resources */,
 				48FAEAA21B1EA39D006D8DE7 /* edit.png in Resources */,
+				48F76F941B1FEC63001D0C36 /* 4@2x.png in Resources */,
 				48FAEA9B1B1EA1D0006D8DE7 /* 80.png in Resources */,
+				48F76F951B1FEC63001D0C36 /* 5@2x.png in Resources */,
 				48FAEA961B1EA1D0006D8DE7 /* 120.png in Resources */,
 				480575E11B1C2870001C40A5 /* 1.png in Resources */,
 				48FAEAA41B1EA653006D8DE7 /* save.png in Resources */,
@@ -400,6 +424,7 @@
 				48FAEA951B1EA1D0006D8DE7 /* 1024.png in Resources */,
 				480857A41B1DDFC3000AD36A /* water.png in Resources */,
 				480575E31B1C4784001C40A5 /* list_bg.png in Resources */,
+				48F76F971B1FEC63001D0C36 /* 6p@3x.png in Resources */,
 				48238B981B1711BB0029C7DB /* LaunchScreen.xib in Resources */,
 				48FAEAA01B1EA39D006D8DE7 /* add.png in Resources */,
 				48FAEA981B1EA1D0006D8DE7 /* 256.png in Resources */,
@@ -570,6 +595,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -581,6 +608,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Diary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
