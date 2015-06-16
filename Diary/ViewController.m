@@ -15,7 +15,7 @@
 #import "SettingView.h"
 
 
-#define SCROLL_HEIGHT  250
+#define SCROLL_HEIGHT  (SCREEN_HEIGHT/2.0+0)
 
 #define LAB_WIDTH ([ShareInfo getLabWidth])
 #define LAB_HEIGHT SCROLL_HEIGHT
@@ -117,7 +117,7 @@
         scrView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0 , SCREEN_WIDTH-40 , SCROLL_HEIGHT)];
         scrView.center = self.view.center;
         scrView.showsHorizontalScrollIndicator = NO;
-        scrView.backgroundColor = [UIColor clearColor];
+        scrView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:scrView];
     }
     
@@ -167,7 +167,7 @@
 
 -(void)showArticle:(int)aId
 {
-    ShowView * view = [[ShowView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) withId:aId];
+    ShowView * view = [[ShowView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) withId:aId];
     
     CATransition * animation = [CATransition animation];
     animation.delegate = self;
@@ -201,7 +201,7 @@
 
 -(void)setting
 {
-    SettingView * view = [[SettingView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+    SettingView * view = [[SettingView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     
     CATransition * animation = [CATransition animation];
     animation.delegate = self;

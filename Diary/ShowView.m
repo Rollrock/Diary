@@ -12,6 +12,7 @@
 #import "MyFMDB.h"
 #import "SVProgressHUD.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "RFRateMe.h"
 
 #define BTN_WIDHT 30
 #define BTN_DIS  40
@@ -534,6 +535,8 @@
         //
         [self initView];
         [self layoutButtomView];
+        
+        [RFRateMe showRateAlert];
         
      }
     

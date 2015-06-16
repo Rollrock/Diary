@@ -36,6 +36,8 @@
 		48B975261B1F53490044BA72 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B975211B1F53490044BA72 /* SVIndefiniteAnimatedView.m */; };
 		48B975271B1F53490044BA72 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48B975231B1F53490044BA72 /* SVProgressHUD.bundle */; };
 		48B975281B1F53490044BA72 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B975251B1F53490044BA72 /* SVProgressHUD.m */; };
+		48EEE0241B304AA500D78ED4 /* RFRateMe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EEE0211B304AA500D78ED4 /* RFRateMe.m */; };
+		48EEE0251B304AA500D78ED4 /* UIAlertView+NSCookbook.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EEE0231B304AA500D78ED4 /* UIAlertView+NSCookbook.m */; };
 		48F76F941B1FEC63001D0C36 /* 4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F76F901B1FEC63001D0C36 /* 4@2x.png */; };
 		48F76F951B1FEC63001D0C36 /* 5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F76F911B1FEC63001D0C36 /* 5@2x.png */; };
 		48F76F961B1FEC63001D0C36 /* 6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48F76F921B1FEC63001D0C36 /* 6@2x.png */; };
@@ -119,6 +121,10 @@
 		48B975231B1F53490044BA72 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		48B975241B1F53490044BA72 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		48B975251B1F53490044BA72 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		48EEE0201B304AA500D78ED4 /* RFRateMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFRateMe.h; sourceTree = "<group>"; };
+		48EEE0211B304AA500D78ED4 /* RFRateMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFRateMe.m; sourceTree = "<group>"; };
+		48EEE0221B304AA500D78ED4 /* UIAlertView+NSCookbook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+NSCookbook.h"; sourceTree = "<group>"; };
+		48EEE0231B304AA500D78ED4 /* UIAlertView+NSCookbook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+NSCookbook.m"; sourceTree = "<group>"; };
 		48F76F901B1FEC63001D0C36 /* 4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4@2x.png"; sourceTree = "<group>"; };
 		48F76F911B1FEC63001D0C36 /* 5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5@2x.png"; sourceTree = "<group>"; };
 		48F76F921B1FEC63001D0C36 /* 6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6@2x.png"; sourceTree = "<group>"; };
@@ -266,6 +272,7 @@
 		483EFCD61B1B0FF100553486 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				48EEE01F1B304AA500D78ED4 /* RFRateMe */,
 				48B9751F1B1F53490044BA72 /* SVProgressHUD */,
 				480575E41B1C57ED001C40A5 /* font */,
 				483EFCD71B1B0FF100553486 /* fmdb */,
@@ -302,6 +309,17 @@
 				48B975251B1F53490044BA72 /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		48EEE01F1B304AA500D78ED4 /* RFRateMe */ = {
+			isa = PBXGroup;
+			children = (
+				48EEE0201B304AA500D78ED4 /* RFRateMe.h */,
+				48EEE0211B304AA500D78ED4 /* RFRateMe.m */,
+				48EEE0221B304AA500D78ED4 /* UIAlertView+NSCookbook.h */,
+				48EEE0231B304AA500D78ED4 /* UIAlertView+NSCookbook.m */,
+			);
+			path = RFRateMe;
 			sourceTree = "<group>";
 		};
 		48F76F8F1B1FEC63001D0C36 /* launch */ = {
@@ -465,11 +483,13 @@
 				483EFCE61B1B0FF100553486 /* FMDatabaseQueue.m in Sources */,
 				483EFCEF1B1B259300553486 /* Structs.m in Sources */,
 				480857A21B1D93C4000AD36A /* ShareInfo.m in Sources */,
+				48EEE0241B304AA500D78ED4 /* RFRateMe.m in Sources */,
 				48238BB51B1725560029C7DB /* ShowView.m in Sources */,
 				48238BB81B173FEA0029C7DB /* EditView.m in Sources */,
 				4808579C1B1D8B21000AD36A /* SettingView.m in Sources */,
 				48B975261B1F53490044BA72 /* SVIndefiniteAnimatedView.m in Sources */,
 				483EFCE71B1B0FF100553486 /* FMResultSet.m in Sources */,
+				48EEE0251B304AA500D78ED4 /* UIAlertView+NSCookbook.m in Sources */,
 				48238BB21B1724DB0029C7DB /* ShowViewController.m in Sources */,
 				483EFCEC1B1B111400553486 /* MyFMDB.m in Sources */,
 				483EFCE41B1B0FF100553486 /* FMDatabaseAdditions.m in Sources */,
@@ -598,7 +618,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Diary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -611,7 +631,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Diary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
